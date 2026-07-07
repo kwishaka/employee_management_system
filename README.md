@@ -116,4 +116,3 @@ EmployeeManagementSystem
 - Dashboard Analytics
 - Employee Attendance Module
 
-This project is developed for educational purposes.
