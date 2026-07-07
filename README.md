@@ -40,6 +40,26 @@ Each applicant must provide:
 - Curriculum Vitae (CV/Resume)
 - Personal Information
 - Educational Background
+Applicant can submit application details and documents.
+
+Applicant can get application status by Track ID.
+
+HR Admin can fetch all applications.
+
+HR Admin can fetch a specific application profile.
+
+HR Admin can make an application decision (Review Action).
+
+HR Admin can delete an application record.
+
+User can sign up (Register User).
+
+User can sign in (User Login - Identity Verification Only).
+
+System can update login to issue token (JWT Authorization).
+
+System can protect application and admin endpoints using the issued token (Protect Routes).
+
 
 ---
 
