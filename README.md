@@ -24,25 +24,25 @@ This project aims to demonstrate the following concepts:
 ---
 
 ##  System Features
-Applicant can submit application details and documents.
+1.Applicant can submit application details and documents.
 
-Applicant can get application status by Track ID.
+2.Applicant can get application status by Track ID.
 
-HR Admin can fetch all applications.
+3.HR Admin can fetch all applications.
 
-HR Admin can fetch a specific application profile.
+4.HR Admin can fetch a specific application profile.
 
-HR Admin can make an application decision (Review Action).
+5.HR Admin can make an application decision (Review Action).
 
-HR Admin can delete an application record.
+6.HR Admin can delete an application record.
 
-User can sign up (Register User).
+7.User can sign up (Register User).
 
-User can sign in (User Login - Identity Verification Only).
+8.User can sign in (User Login - Identity Verification Only).
 
-System can update login to issue token (JWT Authorization).
+9.System can update login to issue token (JWT Authorization).
 
-System can protect application and admin endpoints using the issued token (Protect Routes).
+10.System can protect application and admin endpoints using the issued token (Protect Routes).
 
 ### Applicant Module
 
@@ -70,24 +70,21 @@ System can protect application and admin endpoints using the issued token (Prote
 
 ---
 
-## 🛠 Technologies Used
+## Technologies Used
+Spring Boot
+- PostgreSQL
+- Spring Security
+- JWT Authentication
+- REST API
+- Docker
 
 ### Programming Language
-
-- Java SE
-
-### GUI
-
-- Java Swing
-
-### Database
-
-- MySQL Server 8.0
-
-### Database Connectivity
-
-- JDBC (Java Database Connectivity)
-
+IntelliJ IDEA Community Edition
+- pgAdmin 4
+- Maven
+- Git
+- GitHub
+- Postman
 ### Development Tools
 
 - NetBeans IDE
