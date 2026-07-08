@@ -1,30 +1,220 @@
 # Employee Management System
 
-##  Overview
+## Overview
 
-The Employee Management System is a Java desktop application developed to automate employee recruitment and management. The system enables applicants to submit application details while allowing Human Resource (HR) administrators to review, approve, reject, and manage employee records.
+The Employee Management System is a Java desktop application designed to simplify the employee recruitment and management process. The system enables applicants to submit their application details and allows Human Resource (HR) administrators to review, approve, reject, and manage employee records.
 
-This project demonstrates practical application of software development concepts including Git Version Control, Database Design, Java Programming, and Project Management practices.
+The project demonstrates Java programming, Object-Oriented Programming (OOP), Java Swing GUI development, JDBC database connectivity, SQL database operations, and Git version control.
 
 ---
 
-#  Course Competencies Demonstrated
+##  Objectives
 
-## 1. Git and Version Control
+This project aims to demonstrate the following concepts:
 
-### Overview
+- Java Object-Oriented Programming (OOP)
+- Java Swing GUI Development
+- Database Design
+- SQL Queries
+- JDBC Database Connectivity
+- CRUD (Create, Read, Update, Delete) Operations
+- Git Version Control
+- GitHub Repository Management
 
-Git is used to track changes made during software development and enables collaboration through version control.
+---
 
-### Skills Demonstrated
+##  System Features
+Applicant can submit application details and documents.
+
+Applicant can get application status by Track ID.
+
+HR Admin can fetch all applications.
+
+HR Admin can fetch a specific application profile.
+
+HR Admin can make an application decision (Review Action).
+
+HR Admin can delete an application record.
+
+User can sign up (Register User).
+
+User can sign in (User Login - Identity Verification Only).
+
+System can update login to issue token (JWT Authorization).
+
+System can protect application and admin endpoints using the issued token (Protect Routes).
+
+### Applicant Module
+
+- Submit employment application details.
+- Upload required application documents.
+- View application status.
+
+### HR Administrator Module
+
+- Secure login authentication.
+- View all submitted applications.
+- Search for a specific applicant.
+- View applicant profile.
+- Approve applications.
+- Reject applications.
+- Delete application records.
+- Manage employee records.
+
+### 🗄 Database Features
+
+- Store applicant information.
+- Store employee information.
+- Maintain application status.
+- Retrieve employee and applicant records.
+
+---
+
+## 🛠 Technologies Used
+
+### Programming Language
+
+- Java SE
+
+### GUI
+
+- Java Swing
+
+### Database
+
+- MySQL Server 8.0
+
+### Database Connectivity
+
+- JDBC (Java Database Connectivity)
+
+### Development Tools
+
+- NetBeans IDE
+- MySQL Workbench
+- Git
+- GitHub
+
+---
+
+##  Project Structure
+
+```
+EmployeeManagementSystem
+│
+├── src
+│   ├── com.ems.database
+│   ├── com.ems.dao
+│   ├── com.ems.model
+│   ├── com.ems.view
+│   ├── com.ems.controller
+│   └── com.ems.util
+│
+└── README.md
+```
+
+---
+
+##  Database Tables
+
+The system consists of the following database tables:
+
+- users
+- applicants
+- employees
+- departments
+## Database
+
+The application uses MySQL as its relational database management system.
+
+### Database Concepts Demonstrated
+
+- Relational Database Design
+- Table Creation
+- Primary Keys
+- Foreign Keys
+- SQL Queries
+- CRUD Operations
+- JDBC Connectivity
+
+### Main Database Tables
+
+- users
+- applicants
+- employees
+- departments
+---
+
+##  Installation
+
+1. Clone the repository.
+
+```bash
+git clone https://github.com/kwishaka/employeemanagmentsystem.git
+```
+
+2. Open the project in NetBeans IDE.
+
+3. Create the MySQL database.
+
+4. Import the SQL database script.
+
+5. Update the database connection credentials inside `DBConnection.java`.
+
+6. Run the application.
+
+---
+
+##  Application Workflow
+
+1. HR Administrator logs into the system.
+2. Applicant submits an employment application.
+3. Application information is stored in the database.
+4. HR Administrator reviews submitted applications.
+5. HR Administrator approves or rejects applications.
+6. Approved applicants can be added to employee records.
+
+---
+
+##  Skills Demonstrated
+
+### Git & Version Control
+
+- Git repository creation
+- Git commits
+- GitHub repository management
+- Version control
+
+### Database Skills
+
+- Database Design
+- SQL Table Creation
+- SQL Queries
+- CRUD Operations
+- JDBC Connectivity
+
+### Java Programming
+
+- Object-Oriented Programming (OOP)
+- Java Swing GUI Development
+- Exception Handling
+- JDBC Programming
+
+---
+
+## Git & Version Control
+
+This project demonstrates the use of Git and GitHub for version control.
+
+### Git Skills Applied
 
 - Repository creation
 - Initial commit
-- Multiple commits during development
+- Regular commits for feature development
 - Branch creation and management
-- Source code version tracking using GitHub
+- Version tracking using GitHub
 
-### Git Commands Used
+### Common Git Commands
 
 ```bash
 git init
@@ -36,123 +226,30 @@ git merge development
 git push origin main
 ```
 
----
+Project management activities include:
 
-## 2. Database
+- Planning project milestones
+- Tracking development progress
+- Managing source code using Git
+- Version control using GitHub
 
-### Overview
-
-The project uses a relational database to store and manage employee and applicant information.
-
-### Skills Demonstrated
-
-- Database Design
-- SQL Table Creation
-- Primary Keys
-- Foreign Keys
-- SQL Queries
-- CRUD Operations
-- JDBC Connectivity
-
-### Database Used
-
-- MySQL Server 8.0
-
-### Main Tables
-
-- users
-- applicants
-- employees
-- departments
-
----
-
-## 3. Spring Boot Framework
-
-### Course Learning
-
-This project introduces concepts related to Spring Boot.
-
-Although the current implementation is developed as a Java Swing desktop application, the project has been designed with a layered architecture (Model, DAO, Controller, and View), making it easier to migrate to Spring Boot in future versions.
-
-Planned Spring Boot concepts include:
-
-- Spring Initializr
-- Dependency Injection (DI)
-- Inversion of Control (IoC)
-- REST APIs
-- Spring Data JPA
-- Spring Security
-
----
-
-## 4. Project Management
-
-This project follows basic software project management practices including:
-
-- Requirement Analysis
-- System Design
-- Database Design
-- Git Version Control
-- Incremental Feature Development
-- Documentation
-- GitHub Repository Management
-
-Future improvements include:
+Future versions will integrate:
 
 - Jira Scrum Board
+
+- ##  Future Improvements
+
+The following features are planned for future versions of the system:
+
+- Employee attendance management
+- Payroll management
+- Email notifications
+- Password encryption
+- Role-based access control
+- Report generation
+- Migration to Spring Boot and PostgreSQL
+
+---
+- GitHub Issues
 - Sprint Planning
-- Issue Tracking
-- GitHub–Jira Integration
-
----
-
-#  Technologies Used
-
-- Java SE
-- Java Swing
-- JDBC
-- MySQL
-- NetBeans IDE
-- Git
-- GitHub
-
----
-
-#  Features
-
-## Applicant
-
-- Submit application details
-- Upload required documents
-- Track application status
-
-## HR Administrator
-
-- Login
-- View all applications
-- Search applicants
-- Review applications
-- Approve applications
-- Reject applications
-- Delete applications
-- Manage employees
-
----
-
-#  Future Improvements
-
-The next version of the system will be developed using:
-
-- Spring Boot
-- PostgreSQL
-- Spring Security
-- JWT Authentication
-- REST API
-- Docker
-
-
-
-
-
-
+- Task Tracking
