@@ -1,85 +1,78 @@
-# employee_management_system
-##  Project Overview
+# Employee Management System
 
-The Employee Management System is a Java desktop application designed to simplify the employee recruitment process. The system allows applicants to submit their information and enables Human Resource (HR) personnel to review applications and make hiring decisions.
+##  Overview
 
-The application validates applicant information, stores records in the database, and allows HR to approve or reject applicants based on the submitted requirements.
+The Employee Management System is a Java desktop application designed to simplify the employee recruitment and management process. The system enables applicants to submit their application details and allows Human Resource (HR) administrators to review, approve, reject, and manage employee records.
+
+The project demonstrates Java programming, Object-Oriented Programming (OOP), Java Swing GUI development, JDBC database connectivity, SQL database operations, and Git version control.
 
 ---
 
 ##  Objectives
 
-- Manage employee applications efficiently.
-- Store applicant information securely.
-- Verify required documents before approval.
-- Allow HR to review and manage applications.
-- Improve the recruitment process through automation.
+This project aims to demonstrate the following concepts:
+
+- Java Object-Oriented Programming (OOP)
+- Java Swing GUI Development
+- Database Design
+- SQL Queries
+- JDBC Database Connectivity
+- CRUD (Create, Read, Update, Delete) Operations
+- Git Version Control
+- GitHub Repository Management
 
 ---
 
-##  Features
+##  System Features
 
-- User Login (HR and Applicant)
-- Applicant Registration
-- Upload Required Documents
-- HR Dashboard
-- View Applicant Details
-- Accept or Reject Applicants
-- Employee Records Management
-- Database Integration
-- Simple and User-Friendly Interface
+###  Applicant Module
 
----
+- Submit employment application details.
+- Upload required application documents.
+- View application status.
 
-##  Applicant Requirements
+###  HR Administrator Module
 
-Each applicant must provide:
+- Secure login authentication.
+- View all submitted applications.
+- Search for a specific applicant.
+- View applicant profile.
+- Approve applications.
+- Reject applications.
+- Delete application records.
+- Manage employee records.
 
-- National ID
-- Professional Application Letter
-- Curriculum Vitae (CV/Resume)
-- Personal Information
-- Educational Background
-Applicant can submit application details and documents.
+### 🗄 Database Features
 
-Applicant can get application status by Track ID.
-
-HR Admin can fetch all applications.
-
-HR Admin can fetch a specific application profile.
-
-HR Admin can make an application decision (Review Action).
-
-HR Admin can delete an application record.
-
-User can sign up (Register User).
-
-User can sign in (User Login - Identity Verification Only).
-
-System can update login to issue token (JWT Authorization).
-
-System can protect application and admin endpoints using the issued token (Protect Routes).
-
+- Store applicant information.
+- Store employee information.
+- Maintain application status.
+- Retrieve employee and applicant records.
 
 ---
 
 ##  Technologies Used
 
-- Java
-- Java Swing
-- JDBC
-- Oracle Database (Migration from MySQL)
-- NetBeans IDE
-- Git & GitHub
-- ## Technologies Used
+### Programming Language
 
 - Java SE
+
+### GUI
+
 - Java Swing
-- JDBC (Java Database Connectivity)
+
+### Database
+
 - MySQL Server 8.0
-- MySQL Workbench 8.0
-- MySQL Connector/J
-- NetBeans IDE 8.2
+
+### Database Connectivity
+
+- JDBC (Java Database Connectivity)
+
+### Development Tools
+
+- NetBeans IDE
+- MySQL Workbench
 - Git
 - GitHub
 
@@ -92,47 +85,111 @@ EmployeeManagementSystem
 │
 ├── src
 │   ├── com.ems.database
-│   ├── com.ems.model
 │   ├── com.ems.dao
-│   ├── com.ems.controller
+│   ├── com.ems.model
 │   ├── com.ems.view
+│   ├── com.ems.controller
 │   └── com.ems.util
 │
-├── README.md
-└── Database Scripts
+└── README.md
 ```
 
 ---
 
 ##  Database Tables
 
-- Users
-- Applicants
-- Documents
-- Applications
-- Employees
+The system consists of the following database tables:
+
+- users
+- applicants
+- employees
+- departments
 
 ---
 
-##  System Workflow
+##  Installation
 
-1. Applicant creates an account.
-2. Applicant submits required documents.
-3. HR reviews the application.
-4. System validates applicant information.
-5. HR accepts or rejects the application.
-6. Accepted applicants become employees.
+1. Clone the repository.
 
+```bash
+git clone https://github.com/kwishaka/employeemanagmentsystem.git
+```
 
+2. Open the project in NetBeans IDE.
+
+3. Create the MySQL database.
+
+4. Import the SQL database script.
+
+5. Update the database connection credentials inside `DBConnection.java`.
+
+6. Run the application.
+
+---
+
+##  Application Workflow
+
+1. HR Administrator logs into the system.
+2. Applicant submits an employment application.
+3. Application information is stored in the database.
+4. HR Administrator reviews submitted applications.
+5. HR Administrator approves or rejects applications.
+6. Approved applicants can be added to employee records.
+
+---
+
+##  Skills Demonstrated
+
+### Git & Version Control
+
+- Git repository creation
+- Git commits
+- GitHub repository management
+- Version control
+
+### Database Skills
+
+- Database Design
+- SQL Table Creation
+- SQL Queries
+- CRUD Operations
+- JDBC Connectivity
+
+### Java Programming
+
+- Object-Oriented Programming (OOP)
+- Java Swing GUI Development
+- Exception Handling
+- JDBC Programming
 
 ---
 
 ##  Future Improvements
 
-- Email Notifications
-- PDF Report Generation
-- Search and Filter Employees
-- Password Encryption
-- Dashboard Analytics
-- Employee Attendance Module
+The following features are planned for future versions of the system:
+
+- Employee attendance management
+- Payroll management
+- Email notifications
+- Password encryption
+- Role-based access control
+- Report generation
+- Migration to Spring Boot and PostgreSQL
+
+---
+
+## Author
+
+**Ukwishaka Sandrine**
+
+Bachelor of Information Management Systems
+
+Adventist University of Central Africa (AUCA)
+
+-
+
+
+
+
+
 
