@@ -4,10 +4,14 @@ import com.ems.mis.dto.UserRequestDTO;
 import com.ems.mis.dto.UserResponseDTO;
 import com.ems.mis.entry.User;
 import com.ems.mis.repository.UserRepository;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import com.ems.mis.dto.LoginRequestDTO;
+import com.ems.mis.dto.LoginResponseDTO;
 
 import java.util.List;
 import java.util.stream.Collectors;
+
 
 @Service
 public class UserService {
@@ -60,4 +64,24 @@ public class UserService {
                 .collect(Collectors.toList());
 
     }
+    public LoginResponseDTO loginUser(LoginRequestDTO dto) {
+
+        User user = repository.findByUsername(dto.getUsername())
+                .orElseThrow(() -> new RuntimeException("Invalid username or password"));
+
+        if (!user.getPassword().equals(dto.getPassword())) {
+            throw new RuntimeException("Invalid username or password");
+        }
+
+        return new LoginResponseDTO(
+                user.getId(),
+                user.getFullName(),
+                user.getUsername(),
+                user.getEmail(),
+                user.getRole(),
+                "Login successful"
+        );
+    }
 }
+
+

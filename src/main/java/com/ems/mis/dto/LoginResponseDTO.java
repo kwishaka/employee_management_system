@@ -1,40 +1,25 @@
-package com.ems.mis.entry;
-import jakarta.persistence.*;
-import com.ems.mis.dto.LoginRequestDTO;
-import com.ems.mis.dto.LoginResponseDTO;
-@Entity
-@Table(name = "users")
-public class User {
+package com.ems.mis.dto;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class LoginResponseDTO {
+
     private Long id;
-
-    @Column(nullable = false)
     private String fullName;
-
-    @Column(unique = true, nullable = false)
     private String username;
-
-    @Column(nullable = false)
     private String email;
-
-    @Column(nullable = false)
-    private String password;
-
-    @Column(nullable = false)
     private String role;
+    private String message;
 
-    public User() {
+    public LoginResponseDTO() {
     }
 
-    public User(Long id, String fullName, String username, String email, String password, String role) {
+    public LoginResponseDTO(Long id, String fullName, String username,
+                            String email, String role, String message) {
         this.id = id;
         this.fullName = fullName;
         this.username = username;
         this.email = email;
-        this.password = password;
         this.role = role;
+        this.message = message;
     }
 
     public Long getId() {
@@ -69,14 +54,6 @@ public class User {
         this.email = email;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
     public String getRole() {
         return role;
     }
@@ -84,4 +61,13 @@ public class User {
     public void setRole(String role) {
         this.role = role;
     }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
 }
+
