@@ -77,6 +77,17 @@ Spring Boot
 - JWT Authentication
 - REST API
 - Docker
+- Java 25
+- Spring Boot
+- Spring Web
+- Spring Data JPA
+- Spring Security
+- JWT Authentication
+- PostgreSQL
+- Maven
+- Lombok
+- Jakarta Validation
+- Git & GitHub
 
 ### Programming Language
 IntelliJ IDEA Community Edition
@@ -97,17 +108,19 @@ IntelliJ IDEA Community Edition
 ##  Project Structure
 
 ```
-EmployeeManagementSystem
-│
-├── src
-│   ├── com.ems.database
-│   ├── com.ems.dao
-│   ├── com.ems.model
-│   ├── com.ems.view
-│   ├── com.ems.controller
-│   └── com.ems.util
-│
-└── README.md
+## Project Structure
+
+```
+src
+├── controller
+├── service
+├── repository
+├── entity
+├── dto
+├── security
+├── config
+└── EmployeeManagementApplication.java
+readme.md
 ```
 
 ---
