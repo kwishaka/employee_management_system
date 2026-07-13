@@ -99,4 +99,47 @@ public class EmployeeService {
 
         return repository.save(employee);
     }
+    // Update Employee
+    public EmployeeResponseDTO updateEmployee(Long id, EmployeeRequestDTO dto) {
+
+        Employee employee = repository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Employee not found"));
+
+        // Check if email already exists for another employee
+        if (!employee.getEmail().equals(dto.getEmail())
+                && repository.existsByEmail(dto.getEmail())) {
+
+            throw new RuntimeException("Email already exists");
+        }
+
+        employee.setFirstName(dto.getFirstName());
+        employee.setLastName(dto.getLastName());
+        employee.setEmail(dto.getEmail());
+        employee.setPhoneNumber(dto.getPhoneNumber());
+        employee.setDepartment(dto.getDepartment());
+        employee.setPosition(dto.getPosition());
+        employee.setSalary(dto.getSalary());
+
+        Employee updatedEmployee = repository.save(employee);
+
+        return new EmployeeResponseDTO(
+                updatedEmployee.getId(),
+                updatedEmployee.getFirstName(),
+                updatedEmployee.getLastName(),
+                updatedEmployee.getEmail(),
+                updatedEmployee.getPhoneNumber(),
+                updatedEmployee.getDepartment(),
+                updatedEmployee.getPosition(),
+                updatedEmployee.getSalary()
+        );
+    }
+    // Delete Employee
+    public void deleteEmployee(Long id) {
+
+        Employee employee = repository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Employee not found"));
+
+        repository.delete(employee);
+    }
+
 }
