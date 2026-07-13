@@ -34,22 +34,23 @@ public class EmployeeController {
 
     // Get Employee By ID
     @GetMapping("/{id}")
-    public EmployeeResponseDTO getEmployeeById(@PathVariable Long id) {
+    public EmployeeResponseDTO getEmployeeById(
+            @PathVariable("id") Long id) {
+
         return service.getEmployeeById(id);
     }
-
     @PutMapping("/{id}")
     public EmployeeResponseDTO updateEmployee(
-            @PathVariable Long id,
+            @PathVariable("id") Long id,
             @Valid @RequestBody EmployeeRequestDTO dto) {
 
         return service.updateEmployee(id, dto);
     }
     @DeleteMapping("/{id}")
-    public String deleteEmployee(@PathVariable Long id) {
+    public String deleteEmployee(
+            @PathVariable("id") Long id) {
 
         service.deleteEmployee(id);
-
-        return "Employee deleted successfully.";
+        return "Employee deleted successfully";
     }
 }

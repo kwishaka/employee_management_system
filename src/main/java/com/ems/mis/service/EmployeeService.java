@@ -18,7 +18,9 @@ public class EmployeeService {
         this.repository = repository;
     }
 
+    // =========================
     // Create Employee
+    // =========================
     public EmployeeResponseDTO createEmployee(EmployeeRequestDTO dto) {
 
         if (repository.existsByEmail(dto.getEmail())) {
@@ -37,79 +39,44 @@ public class EmployeeService {
 
         Employee savedEmployee = repository.save(employee);
 
-        return new EmployeeResponseDTO(
-                savedEmployee.getId(),
-                savedEmployee.getFirstName(),
-                savedEmployee.getLastName(),
-                savedEmployee.getEmail(),
-                savedEmployee.getPhoneNumber(),
-                savedEmployee.getDepartment(),
-                savedEmployee.getPosition(),
-                savedEmployee.getSalary()
-        );
+        return mapToResponse(savedEmployee);
     }
 
+    // =========================
     // Get All Employees
+    // =========================
     public List<EmployeeResponseDTO> getAllEmployees() {
 
         return repository.findAll()
                 .stream()
-                .map(employee -> new EmployeeResponseDTO(
-                        employee.getId(),
-                        employee.getFirstName(),
-                        employee.getLastName(),
-                        employee.getEmail(),
-                        employee.getPhoneNumber(),
-                        employee.getDepartment(),
-                        employee.getPosition(),
-                        employee.getSalary()
-                ))
+                .map(this::mapToResponse)
                 .collect(Collectors.toList());
     }
 
+    // =========================
     // Get Employee By ID
+    // =========================
     public EmployeeResponseDTO getEmployeeById(Long id) {
 
         Employee employee = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Employee not found"));
 
-        return new EmployeeResponseDTO(
-                employee.getId(),
-                employee.getFirstName(),
-                employee.getLastName(),
-                employee.getEmail(),
-                employee.getPhoneNumber(),
-                employee.getDepartment(),
-                employee.getPosition(),
-                employee.getSalary()
-        );
+        return mapToResponse(employee);
     }
-    public Employee updateEmployee(Long id, Employee updatedEmployee) {
 
-        Employee employee = repository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Employee not found"));
-
-        employee.setFirstName(updatedEmployee.getFirstName());
-        employee.setLastName(updatedEmployee.getLastName());
-        employee.setEmail(updatedEmployee.getEmail());
-        employee.setPhoneNumber(updatedEmployee.getPhoneNumber());
-        employee.setDepartment(updatedEmployee.getDepartment());
-        employee.setPosition(updatedEmployee.getPosition());
-        employee.setSalary(updatedEmployee.getSalary());
-
-        return repository.save(employee);
-    }
+    // =========================
     // Update Employee
+    // =========================
     public EmployeeResponseDTO updateEmployee(Long id, EmployeeRequestDTO dto) {
 
         Employee employee = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Employee not found"));
 
-        // Check if email already exists for another employee
+        // Prevent duplicate email
         if (!employee.getEmail().equals(dto.getEmail())
                 && repository.existsByEmail(dto.getEmail())) {
 
-            throw new RuntimeException("Email already exists");
+            throw new RuntimeException("Employee email already exists");
         }
 
         employee.setFirstName(dto.getFirstName());
@@ -122,18 +89,12 @@ public class EmployeeService {
 
         Employee updatedEmployee = repository.save(employee);
 
-        return new EmployeeResponseDTO(
-                updatedEmployee.getId(),
-                updatedEmployee.getFirstName(),
-                updatedEmployee.getLastName(),
-                updatedEmployee.getEmail(),
-                updatedEmployee.getPhoneNumber(),
-                updatedEmployee.getDepartment(),
-                updatedEmployee.getPosition(),
-                updatedEmployee.getSalary()
-        );
+        return mapToResponse(updatedEmployee);
     }
+
+    // =========================
     // Delete Employee
+    // =========================
     public void deleteEmployee(Long id) {
 
         Employee employee = repository.findById(id)
@@ -142,4 +103,20 @@ public class EmployeeService {
         repository.delete(employee);
     }
 
+    // =========================
+    // Helper Method
+    // =========================
+    private EmployeeResponseDTO mapToResponse(Employee employee) {
+
+        return new EmployeeResponseDTO(
+                employee.getId(),
+                employee.getFirstName(),
+                employee.getLastName(),
+                employee.getEmail(),
+                employee.getPhoneNumber(),
+                employee.getDepartment(),
+                employee.getPosition(),
+                employee.getSalary()
+        );
+    }
 }

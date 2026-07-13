@@ -63,4 +63,5 @@ public class EmployeeResponseDTO {
     public Double getSalary() {
         return salary;
     }
+
 }
