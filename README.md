@@ -24,25 +24,62 @@ This project aims to demonstrate the following concepts:
 ---
 
 ##  System Features
-Applicant can submit application details and documents.
+1.Applicant can submit application details and documents.
+**Equivalent in Employee Management System:** Employee Registration
 
-Applicant can get application status by Track ID.
+The system allows an administrator or HR officer to register a new employee by submitting personal and employment details.
+The system validates the information before storing it in the database.
+Application Entity
+        ↓
+ApplicationRepository
+        ↓
+ApplicationRequestDTO
+ApplicationResponseDTO
+        ↓
+ApplicationService
+        ↓
+ApplicationController
+        ↓
+POST /api/applications
+The system validates all required fields.
+The system verifies that the email address is unique.
+If validation succeeds, the employee information is stored in the database.
+Output
+Employee record is successfully created.
+The created employee details are returned as a JSON response.
 
-HR Admin can fetch all applications.
+2.Applicant can get application status by Track ID.
+This feature allows an administrator to retrieve the details of a specific employee using the employee ID.
+Input
+Employee ID
 
-HR Admin can fetch a specific application profile.
+Process
+The system searches for the employee in the database.
 
-HR Admin can make an application decision (Review Action).
+If the employee exists, the employee details are returned.
 
-HR Admin can delete an application record.
+If not found, an error message is returned.
 
-User can sign up (Register User).
+3.HR Admin can fetch all applications.
+This feature allows administrators to retrieve all employee records stored in the database.
 
-User can sign in (User Login - Identity Verification Only).
+Process
+The system fetches every employee record.
 
-System can update login to issue token (JWT Authorization).
+The records are returned as a list.
+4.HR Admin can fetch a specific application profile.
 
-System can protect application and admin endpoints using the issued token (Protect Routes).
+5.HR Admin can make an application decision (Review Action).
+
+6.HR Admin can delete an application record.
+
+7.User can sign up (Register User).
+
+8.User can sign in (User Login - Identity Verification Only).
+
+9.System can update login to issue token (JWT Authorization).
+
+10.System can protect application and admin endpoints using the issued token (Protect Routes).
 
 ### Applicant Module
 
@@ -70,24 +107,32 @@ System can protect application and admin endpoints using the issued token (Prote
 
 ---
 
-## 🛠 Technologies Used
+## Technologies Used
+Spring Boot
+- PostgreSQL
+- Spring Security
+- JWT Authentication
+- REST API
+- Docker
+- Java 25
+- Spring Boot
+- Spring Web
+- Spring Data JPA
+- Spring Security
+- JWT Authentication
+- PostgreSQL
+- Maven
+- Lombok
+- Jakarta Validation
+- Git & GitHub
 
 ### Programming Language
-
-- Java SE
-
-### GUI
-
-- Java Swing
-
-### Database
-
-- MySQL Server 8.0
-
-### Database Connectivity
-
-- JDBC (Java Database Connectivity)
-
+IntelliJ IDEA Community Edition
+- pgAdmin 4
+- Maven
+- Git
+- GitHub
+- Postman
 ### Development Tools
 
 - NetBeans IDE
@@ -100,17 +145,19 @@ System can protect application and admin endpoints using the issued token (Prote
 ##  Project Structure
 
 ```
-EmployeeManagementSystem
-│
-├── src
-│   ├── com.ems.database
-│   ├── com.ems.dao
-│   ├── com.ems.model
-│   ├── com.ems.view
-│   ├── com.ems.controller
-│   └── com.ems.util
-│
-└── README.md
+## Project Structure
+
+```
+src
+├── controller
+├── service
+├── repository
+├── entity
+├── dto
+├── security
+├── config
+└── EmployeeManagementApplication.java
+readme.md
 ```
 
 ---
