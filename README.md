@@ -25,6 +25,28 @@ This project aims to demonstrate the following concepts:
 
 ##  System Features
 1.Applicant can submit application details and documents.
+**Equivalent in Employee Management System:** Employee Registration
+
+The system allows an administrator or HR officer to register a new employee by submitting personal and employment details.
+The system validates the information before storing it in the database.
+Application Entity
+        ↓
+ApplicationRepository
+        ↓
+ApplicationRequestDTO
+ApplicationResponseDTO
+        ↓
+ApplicationService
+        ↓
+ApplicationController
+        ↓
+POST /api/applications
+The system validates all required fields.
+The system verifies that the email address is unique.
+If validation succeeds, the employee information is stored in the database.
+Output
+Employee record is successfully created.
+The created employee details are returned as a JSON response.
 
 2.Applicant can get application status by Track ID.
 
