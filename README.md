@@ -49,9 +49,24 @@ Employee record is successfully created.
 The created employee details are returned as a JSON response.
 
 2.Applicant can get application status by Track ID.
+This feature allows an administrator to retrieve the details of a specific employee using the employee ID.
+Input
+Employee ID
+
+Process
+The system searches for the employee in the database.
+
+If the employee exists, the employee details are returned.
+
+If not found, an error message is returned.
 
 3.HR Admin can fetch all applications.
+This feature allows administrators to retrieve all employee records stored in the database.
 
+Process
+The system fetches every employee record.
+
+The records are returned as a list.
 4.HR Admin can fetch a specific application profile.
 
 5.HR Admin can make an application decision (Review Action).
