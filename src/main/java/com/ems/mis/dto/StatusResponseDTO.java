@@ -7,20 +7,20 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
-
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class ApplicationResponseDTO {
+public class StatusResponseDTO {
 
-    private Long id;
     private String trackId;
     private String fullName;
     private String email;
     private String status;
+    private String statusDescription;
     private LocalDateTime submittedAt;
-    private String resumeUrl;
-    private String idDocumentUrl;
+    private LocalDateTime reviewedAt;
+    private String hrNotes;
     private String message;
+
 }

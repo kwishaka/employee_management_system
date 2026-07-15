@@ -8,6 +8,14 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 @Data
 @Builder
 @NoArgsConstructor
@@ -31,4 +39,14 @@ public class ApplicationRequestDTO {
     private String education;
 
     private String workExperience;
+
+    // Base64 encoded files
+    private String resumeBase64;
+    private String idDocumentBase64;
+
+    // File metadata
+    private String resumeFileName;
+    private String idDocumentFileName;
+    private String resumeContentType;
+    private String idDocumentContentType;
 }

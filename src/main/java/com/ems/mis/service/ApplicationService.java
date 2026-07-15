@@ -1,18 +1,23 @@
 package com.ems.mis.service;
-
 import com.ems.mis.dto.ApplicationRequestDTO;
 import com.ems.mis.dto.ApplicationResponseDTO;
+import com.ems.mis.dto.StatusResponseDTO;
 import com.ems.mis.entry.Application;
 import com.ems.mis.entry.ApplicationStatus;
+import com.ems.mis.exception.ApplicationNotFoundException;
 import com.ems.mis.repository.ApplicationRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDateTime;
+import java.util.Base64;
 import java.util.UUID;
 
 @Slf4j
@@ -21,30 +26,38 @@ import java.util.UUID;
 public class ApplicationService {
 
     private final ApplicationRepository applicationRepository;
-    private final FileStorageService fileStorageService;
 
     /**
-     * FEATURE 1: Submit new application with documents
+     * FEATURE 1: Submit new application with documents (JSON + Base64)
      */
     @Transactional
-    public ApplicationResponseDTO submitApplication(
-            ApplicationRequestDTO request,
-            MultipartFile resume,
-            MultipartFile idDocument) throws IOException {
+    public ApplicationResponseDTO submitApplication(ApplicationRequestDTO request) throws IOException {
 
         log.info("📝 Processing application submission for: {}", request.getEmail());
 
-        // 1. Validate duplicate applications
         validateDuplicateApplication(request);
 
-        // 2. Store files
-        String resumeUrl = fileStorageService.storeFile(resume, "resume_" + request.getEmail());
-        String idDocumentUrl = fileStorageService.storeFile(idDocument, "id_" + request.getEmail());
+        String resumeUrl = null;
+        String idDocumentUrl = null;
 
-        // 3. Generate Track ID
+        if (request.getResumeBase64() != null && !request.getResumeBase64().isEmpty()) {
+            resumeUrl = saveBase64File(
+                    request.getResumeBase64(),
+                    request.getResumeFileName(),
+                    "resume_" + request.getEmail()
+            );
+        }
+
+        if (request.getIdDocumentBase64() != null && !request.getIdDocumentBase64().isEmpty()) {
+            idDocumentUrl = saveBase64File(
+                    request.getIdDocumentBase64(),
+                    request.getIdDocumentFileName(),
+                    "id_" + request.getEmail()
+            );
+        }
+
         String trackId = generateTrackId();
 
-        // 4. Create application entity
         Application application = Application.builder()
                 .trackId(trackId)
                 .fullName(request.getFullName())
@@ -59,12 +72,10 @@ public class ApplicationService {
                 .submittedAt(LocalDateTime.now())
                 .build();
 
-        // 5. Save to database
         Application saved = applicationRepository.save(application);
 
         log.info("✅ Application submitted successfully with Track ID: {}", trackId);
 
-        // 6. Build response
         return ApplicationResponseDTO.builder()
                 .id(saved.getId())
                 .trackId(saved.getTrackId())
@@ -76,6 +87,56 @@ public class ApplicationService {
                 .idDocumentUrl(saved.getIdDocumentUrl())
                 .message("Application submitted successfully! Your Track ID is: " + trackId)
                 .build();
+    }
+
+    /**
+     * FEATURE 2: Get application status by Track ID
+     */
+    public StatusResponseDTO getApplicationStatus(String trackId) {
+
+        Application application = applicationRepository.findByTrackId(trackId)
+                .orElseThrow(() -> new ApplicationNotFoundException("Application not found for Track ID: " + trackId));
+
+        log.info("✅ Status retrieved for Track ID: {}", trackId);
+
+        return StatusResponseDTO.builder()
+                .trackId(application.getTrackId())
+                .fullName(application.getFullName())
+                .email(application.getEmail())
+                .status(application.getStatus().name())
+                .statusDescription(application.getStatus().toString())
+                .submittedAt(application.getSubmittedAt())
+                .reviewedAt(application.getReviewedAt())
+                .hrNotes(application.getHrNotes())
+                .message("Application status retrieved successfully")
+                .build();
+    }
+
+    private String saveBase64File(String base64Data, String fileName, String prefix) throws IOException {
+        if (base64Data == null || base64Data.isEmpty()) {
+            return null;
+        }
+
+        byte[] fileBytes = Base64.getDecoder().decode(base64Data);
+
+        String uploadDir = "./uploads";
+        Path uploadPath = Paths.get(uploadDir);
+        if (!Files.exists(uploadPath)) {
+            Files.createDirectories(uploadPath);
+        }
+
+        String extension = "";
+        if (fileName != null && fileName.contains(".")) {
+            extension = fileName.substring(fileName.lastIndexOf("."));
+        }
+        String filename = prefix + "_" + UUID.randomUUID().toString() + extension;
+        Path filePath = uploadPath.resolve(filename);
+
+        Files.write(filePath, fileBytes);
+
+        log.info("✅ File stored: {}", filename);
+
+        return "/uploads/" + filename;
     }
 
     private void validateDuplicateApplication(ApplicationRequestDTO request) {
@@ -90,4 +151,10 @@ public class ApplicationService {
     private String generateTrackId() {
         return "APP-" + UUID.randomUUID().toString().substring(0, 8).toUpperCase();
     }
+
+    public static Logger getLog() {
+        return log;
+    }
+
+    
 }
