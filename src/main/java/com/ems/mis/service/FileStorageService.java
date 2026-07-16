@@ -14,7 +14,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
-@Slf4j
+@Slf4j  // ✅ Added - this was missing
 @Service
 public class FileStorageService {
 
@@ -42,6 +42,7 @@ public class FileStorageService {
         Path uploadPath = Paths.get(uploadDir);
         if (!Files.exists(uploadPath)) {
             Files.createDirectories(uploadPath);
+            log.info("📁 Created upload directory: {}", uploadPath.toAbsolutePath());
         }
 
         // Generate unique filename
@@ -65,13 +66,13 @@ public class FileStorageService {
     private void validateFile(MultipartFile file) {
         // Check file size
         if (file.getSize() > MAX_FILE_SIZE) {
-            throw new RuntimeException("File size exceeds maximum limit of 10MB");
+            throw new RuntimeException("File size exceeds maximum limit of 10MB. Current size: " + file.getSize() + " bytes");
         }
 
         // Check file type
         String contentType = file.getContentType();
         if (contentType == null || !ALLOWED_CONTENT_TYPES.contains(contentType)) {
-            throw new RuntimeException("Invalid file type. Allowed types: PDF, DOC, DOCX, JPG, PNG");
+            throw new RuntimeException("Invalid file type: " + contentType + ". Allowed types: PDF, DOC, DOCX, JPG, PNG");
         }
     }
 }
