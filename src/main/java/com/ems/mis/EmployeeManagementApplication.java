@@ -1,4 +1,4 @@
-﻿package com.ems.mis;
+package com.ems.mis;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
