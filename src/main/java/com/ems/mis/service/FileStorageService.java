@@ -57,7 +57,7 @@ public class FileStorageService {
         // Save file
         Files.copy(file.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
 
-        log.info("✅ File stored: {}", filename);
+        log.info("âœ… File stored: {}", filename);
 
         return "/uploads/" + filename;
     }
