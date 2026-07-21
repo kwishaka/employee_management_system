@@ -1,184 +1,256 @@
 # Employee Management System API
 
-## Project Overview
 
-The Employee Management System API is a RESTful backend application developed using Spring Boot and PostgreSQL. It allows applicants to submit employment applications and enables HR administrators to manage applications securely.
+## Overview
 
-The system uses JWT (JSON Web Token) authentication to secure protected endpoints and follows a layered architecture using Controllers, Services, Repositories, DTOs, and Entities.
+The Employee Management System is a Java desktop application designed to simplify the employee recruitment and management process. The system enables applicants to submit their application details and allows Human Resource (HR) administrators to review, approve, reject, and manage employee records.
 
----
-
-## Technologies Used
-
-- Java 25
-- Spring Boot
-- Spring Web
-- Spring Data JPA
-- Spring Security
-- JWT Authentication
-- PostgreSQL
-- Maven
-- Lombok
-- Jakarta Validation
-- Git & GitHub
+The project demonstrates Java programming, Object-Oriented Programming (OOP), Java Swing GUI development, JDBC database connectivity, SQL database operations, and Git version control.
 
 ---
 
-## System Features
+##  Objectives
 
-### Authentication
+This project aims to demonstrate the following concepts:
 
-- User can sign up (Register User).
-- User can sign in (User Login – Identity Verification Only).
-- System generates a JWT token after successful login.
-- System protects secured endpoints using JWT Authorization.
-
-### Applicant Features
-
-- Applicant can submit application details and required documents.
-- Applicant can track application status using a Track ID.
-
-### HR Admin Features
-
-- HR Admin can fetch all applications.
-- HR Admin can fetch a specific application profile.
-- HR Admin can review applications and make admission or rejection decisions.
-- HR Admin can delete an application record.
+- Java Object-Oriented Programming (OOP)
+- Java Swing GUI Development
+- Database Design
+- SQL Queries
+- JDBC Database Connectivity
+- CRUD (Create, Read, Update, Delete) Operations
+- Git Version Control
+- GitHub Repository Management
 
 ---
 
-## Project Structure
+##  System Features
+1.Applicant can submit application details and documents.
+
+2.Applicant can get application status by Track ID.
+
+3.HR Admin can fetch all applications.
+
+4.HR Admin can fetch a specific application profile.
+
+4.HR Admin can make an application decision (Review Action).
+
+5.HR Admin can delete an application record.
+
+6.User can sign up (Register User).
+
+7.User can sign in (User Login - Identity Verification Only).
+
+8.System can update login to issue token (JWT Authorization).
+
+9.System can protect application and admin endpoints using the issued token (Protect Routes).
+
+### Applicant Module
+
+- Submit employment application details.
+- Upload required application documents.
+- View application status.
+
+### HR Administrator Module
+
+- Secure login authentication.
+- View all submitted applications.
+- Search for a specific applicant.
+- View applicant profile.
+- Approve applications.
+- Reject applications.
+- Delete application records.
+- Manage employee records.
+
+### 🗄 Database Features
+
+- Store applicant information.
+- Store employee information.
+- Maintain application status.
+- Retrieve employee and applicant records.
+
+---
+
+## 🛠 Technologies Used
+
+### Programming Language
+
+- Java SE
+
+### GUI
+
+- Java Swing
+
+### Database
+
+- MySQL Server 8.0
+
+### Database Connectivity
+
+- JDBC (Java Database Connectivity)
+
+### Development Tools
+
+- NetBeans IDE
+- MySQL Workbench
+- Git
+- GitHub
+
+---
+
+##  Project Structure
 
 ```
-src
-├── controller
-├── service
-├── repository
-├── entity
-├── dto
-├── security
-├── config
-└── EmployeeManagementApplication.java
+EmployeeManagementSystem
+│
+├── src
+│   ├── com.ems.database
+│   ├── com.ems.dao
+│   ├── com.ems.model
+│   ├── com.ems.view
+│   ├── com.ems.controller
+│   └── com.ems.util
+│
+└── README.md
 ```
 
 ---
 
-## API Endpoints
+##  Database Tables
 
-### Authentication
+The system consists of the following database tables:
 
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| POST | `/api/users/register` | Register a new user |
-| POST | `/api/users/login` | Login user and receive JWT token |
-
-### Applicants
-
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| POST | `/api/applications` | Submit application |
-| GET | `/api/applications/{trackId}` | Track application status |
-
-### HR Administration
-
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| GET | `/api/admin/applications` | Get all applications |
-| GET | `/api/admin/applications/{id}` | Get application profile |
-| PUT | `/api/admin/applications/{id}/review` | Review application |
-| DELETE | `/api/admin/applications/{id}` | Delete application |
-
----
-
+- users
+- applicants
+- employees
+- departments
 ## Database
 
-The project uses PostgreSQL.
+The application uses MySQL as its relational database management system.
 
-Example configuration in `application.properties`:
+### Database Concepts Demonstrated
 
-```properties
-spring.datasource.url=jdbc:postgresql://localhost:5432/employee_db
-spring.datasource.username=postgres
-spring.datasource.password=your_password
+- Relational Database Design
+- Table Creation
+- Primary Keys
+- Foreign Keys
+- SQL Queries
+- CRUD Operations
+- JDBC Connectivity
 
-spring.jpa.hibernate.ddl-auto=update
-spring.jpa.show-sql=true
-```
+### Main Database Tables
 
+- users
+- applicants
+- employees
+- departments
 ---
 
-## Running the Project
+##  Installation
 
-### Clone the repository
+1. Clone the repository.
 
 ```bash
-git clone https://github.com/kwishaka/employee-management-system.git
+git clone https://github.com/kwishaka/employeemanagmentsystem.git
 ```
 
-### Navigate into the project
+2. Open the project in NetBeans IDE.
+
+3. Create the MySQL database.
+
+4. Import the SQL database script.
+
+5. Update the database connection credentials inside `DBConnection.java`.
+
+6. Run the application.
+
+---
+
+##  Application Workflow
+
+1. HR Administrator logs into the system.
+2. Applicant submits an employment application.
+3. Application information is stored in the database.
+4. HR Administrator reviews submitted applications.
+5. HR Administrator approves or rejects applications.
+6. Approved applicants can be added to employee records.
+
+---
+
+##  Skills Demonstrated
+
+### Git & Version Control
+
+- Git repository creation
+- Git commits
+- GitHub repository management
+- Version control
+
+### Database Skills
+
+- Database Design
+- SQL Table Creation
+- SQL Queries
+- CRUD Operations
+- JDBC Connectivity
+
+### Java Programming
+
+- Object-Oriented Programming (OOP)
+- Java Swing GUI Development
+- Exception Handling
+- JDBC Programming
+
+---
+
+## Git & Version Control
+
+This project demonstrates the use of Git and GitHub for version control.
+
+### Git Skills Applied
+
+- Repository creation
+- Initial commit
+- Regular commits for feature development
+- Branch creation and management
+- Version tracking using GitHub
+
+### Common Git Commands
 
 ```bash
-cd employee-management-system
+git init
+git add .
+git commit -m "Initial commit"
+git branch development
+git checkout development
+git merge development
+git push origin main
 ```
 
-### Run the application
+Project management activities include:
 
-```bash
-mvn spring-boot:run
-```
+- Planning project milestones
+- Tracking development progress
+- Managing source code using Git
+- Version control using GitHub
 
-The application starts at:
+Future versions will integrate:
 
-```
-http://localhost:8080
-```
+- Jira Scrum Board
+
+- ##  Future Improvements
+
+The following features are planned for future versions of the system:
+
+- Employee attendance management
+- Payroll management
+- Email notifications
+- Password encryption
+- Role-based access control
+- Report generation
+- Migration to Spring Boot and PostgreSQL
 
 ---
-
-## Testing the API
-
-Use one of the following tools:
-
-- Postman
-- IntelliJ HTTP Client
-- Insomnia
-
-Example Registration Endpoint
-
-```
-POST http://localhost:8080/api/users/register
-```
-
-Example Login Endpoint
-
-```
-POST http://localhost:8080/api/users/login
-```
-
----
-
-## Git Workflow
-
-This project follows a Git feature-branch workflow.
-
-- Create a feature branch from `development`.
-- Implement one feature.
-- Commit changes.
-- Push the branch.
-- Open a Pull Request.
-- Request code review before merging.
-
----
-
-## Future Improvements
-
-- Password encryption using BCrypt.
-- JWT authentication and authorization.
-- Role-Based Access Control (Applicant & HR Admin).
-- File upload for applicant documents.
-- Email notifications.
-- Swagger/OpenAPI documentation.
-- Docker deployment.
-
----
-
+- GitHub Issues
+- Sprint Planning
+- Task Tracking
