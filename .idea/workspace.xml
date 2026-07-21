@@ -4,31 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a05d7b4d-16ca-4652-9192-a59da76cf74f" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/application.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/ems/mis/controller/ApplicationController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/ems/mis/dto/ApplicationRequestDTO$ApplicationRequestDTOBuilder.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/ems/mis/dto/ApplicationRequestDTO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/ems/mis/dto/ApplicationResponseDTO$ApplicationResponseDTOBuilder.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/ems/mis/dto/ApplicationResponseDTO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/ems/mis/dto/ResponseDTO$ResponseDTOBuilder.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/ems/mis/dto/ResponseDTO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/ems/mis/dto/StatusResponseDTO$StatusResponseDTOBuilder.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/ems/mis/dto/StatusResponseDTO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/ems/mis/entry/Application$ApplicationBuilder.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/ems/mis/entry/Application.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/ems/mis/entry/ApplicationStatus.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/ems/mis/exception/ApplicationNotFoundException.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/ems/mis/exception/GlobalExceptionHandler.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/ems/mis/repository/ApplicationRepository.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/ems/mis/service/ApplicationService.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/ems/mis/service/FileStorageService.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/Main.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/test-classes/com/ems/mis/EmployeeManagementApplication.class" beforeDir="false" />
-    </list>
+    <list default="true" id="a05d7b4d-16ca-4652-9192-a59da76cf74f" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
