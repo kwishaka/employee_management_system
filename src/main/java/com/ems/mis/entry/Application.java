@@ -1,5 +1,7 @@
 package com.ems.mis.entry;
 
+
+
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -21,8 +23,8 @@ public class Application {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "track_id", nullable = false, unique = true, length = 50)
-    private String trackId;
+    @Column(name = "tracking_id", unique = true, length = 50)  // ✅ Add this field
+    private String trackingId;
 
     @Column(name = "full_name", nullable = false, length = 100)
     private String fullName;
@@ -30,34 +32,22 @@ public class Application {
     @Column(nullable = false, length = 100)
     private String email;
 
-    @Column(name = "national_id", nullable = false, unique = true, length = 20)
-    private String nationalId;
-
     @Column(length = 20)
     private String phone;
 
-    @Column(columnDefinition = "TEXT", nullable = false)
-    private String education;
-
-    @Column(name = "work_experience", columnDefinition = "TEXT")
-    private String workExperience;
-
-    @Column(name = "resume_url", length = 500)
-    private String resumeUrl;
-
-    @Column(name = "id_document_url", length = 500)
-    private String idDocumentUrl;
+    @Column(length = 100)
+    private String position;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private ApplicationStatus status = ApplicationStatus.PENDING;
 
+    @CreationTimestamp
+    @Column(name = "applied_date", updatable = false)
+    private LocalDateTime appliedDate;
+
     @Column(name = "hr_notes", columnDefinition = "TEXT")
     private String hrNotes;
-
-    @CreationTimestamp
-    @Column(name = "submitted_at", updatable = false)
-    private LocalDateTime submittedAt;
 
     @Column(name = "reviewed_at")
     private LocalDateTime reviewedAt;

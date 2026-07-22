@@ -13,12 +13,12 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class ApplicationResponseDTO {
     private Long id;
-    private String trackId;
+    private String trackingId;  // ✅ Add this field
     private String fullName;
     private String email;
+    private String phone;
+    private String position;
     private String status;
-    private LocalDateTime submittedAt;
-    private String resumeUrl;
-    private String idDocumentUrl;
+    private LocalDateTime appliedDate;
     private String message;
 }
