@@ -11,14 +11,20 @@ import java.time.LocalDateTime;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class ApplicationResponseDTO {
+public class AdminApplicationResponseDTO {
     private Long id;
-    private String trackingId;      // ✅ Add this field
+    private String trackingId;
     private String fullName;
     private String email;
     private String phone;
     private String position;
     private String status;
+    private String statusDescription;
+    private String hrNotes;
+    private String reviewedBy;
     private LocalDateTime appliedDate;
+    private LocalDateTime reviewedAt;
     private String message;
 }
+
+
