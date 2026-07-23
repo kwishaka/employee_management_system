@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import java.time.LocalDateTime;
 
 @Data
 @Builder
@@ -12,6 +13,11 @@ import lombok.NoArgsConstructor;
 public class StatusResponseDTO {
     private String trackingId;
     private String fullName;
+    private String email;
     private String status;
+    private String statusDescription;
+    private LocalDateTime appliedDate;
+    private LocalDateTime reviewedAt;
+    private String hrNotes;
     private String message;
 }
