@@ -1,4 +1,3 @@
-
 package com.ems.mis.dto;
 
 import jakarta.validation.constraints.Email;
@@ -23,5 +22,5 @@ public class ApplicationRequestDTO {
 
     private String phone;
 
-    private String position;  // ✅ Add this field
+    private String position;
 }

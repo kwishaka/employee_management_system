@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 public class StatusResponseDTO {
     private String trackingId;
     private String fullName;
-    private String email;          // ✅ Add this field
+    private String email;
     private String status;
     private String statusDescription;
     private LocalDateTime appliedDate;

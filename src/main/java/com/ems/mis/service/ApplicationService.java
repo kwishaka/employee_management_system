@@ -1,6 +1,9 @@
 package com.ems.mis.service;
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 8e05a6a8d98d4f2463ae6585d313e11586671536
 import com.ems.mis.dto.AdminApplicationResponseDTO;
 import com.ems.mis.dto.ApplicationRequestDTO;
 import com.ems.mis.dto.ApplicationResponseDTO;
@@ -36,6 +39,12 @@ public class ApplicationService {
     // FEATURE 1: SUBMIT APPLICATION
     // ========================================
 
+<<<<<<< HEAD
+=======
+    /**
+     * Submit application with files (multipart/form-data)
+     */
+>>>>>>> 8e05a6a8d98d4f2463ae6585d313e11586671536
     @Transactional
     public ApplicationResponseDTO submitApplication(
             ApplicationRequestDTO request,
@@ -44,10 +53,18 @@ public class ApplicationService {
 
         log.info("📝 Processing application submission for: {}", request.getEmail());
 
+<<<<<<< HEAD
+=======
+        // Check if email already exists
+>>>>>>> 8e05a6a8d98d4f2463ae6585d313e11586671536
         if (applicationRepository.existsByEmail(request.getEmail())) {
             throw new RuntimeException("Email already registered. Please use a different email.");
         }
 
+<<<<<<< HEAD
+=======
+        // Store files if provided
+>>>>>>> 8e05a6a8d98d4f2463ae6585d313e11586671536
         String resumeUrl = null;
         String idDocumentUrl = null;
 
@@ -61,8 +78,15 @@ public class ApplicationService {
             log.info("✅ ID Document stored: {}", idDocumentUrl);
         }
 
+<<<<<<< HEAD
         String trackingId = generateTrackingId();
 
+=======
+        // Generate tracking ID
+        String trackingId = generateTrackingId();
+
+        // Create application
+>>>>>>> 8e05a6a8d98d4f2463ae6585d313e11586671536
         Application application = new Application();
         application.setTrackingId(trackingId);
         application.setFullName(request.getFullName());
@@ -72,19 +96,37 @@ public class ApplicationService {
         application.setStatus(ApplicationStatus.PENDING);
         application.setAppliedDate(LocalDateTime.now());
 
+<<<<<<< HEAD
+=======
+        // Save to database
+>>>>>>> 8e05a6a8d98d4f2463ae6585d313e11586671536
         Application saved = applicationRepository.save(application);
 
         log.info("✅ Application submitted! Tracking ID: {}", trackingId);
 
+<<<<<<< HEAD
+=======
+        // Build response
+>>>>>>> 8e05a6a8d98d4f2463ae6585d313e11586671536
         ApplicationResponseDTO response = mapToResponseDTO(saved);
         response.setMessage("Application submitted successfully! Your Tracking ID is: " + trackingId);
         return response;
     }
 
+<<<<<<< HEAD
+=======
+    /**
+     * Create application without files (JSON only)
+     */
+>>>>>>> 8e05a6a8d98d4f2463ae6585d313e11586671536
     @Transactional
     public ApplicationResponseDTO createApplication(ApplicationRequestDTO request) {
         log.info("📝 Creating new application for: {}", request.getFullName());
 
+<<<<<<< HEAD
+=======
+        // Check if email already exists
+>>>>>>> 8e05a6a8d98d4f2463ae6585d313e11586671536
         if (applicationRepository.existsByEmail(request.getEmail())) {
             throw new RuntimeException("Email already registered. Please use a different email.");
         }
@@ -111,6 +153,12 @@ public class ApplicationService {
     // FEATURE 2: GET APPLICATIONS
     // ========================================
 
+<<<<<<< HEAD
+=======
+    /**
+     * Get application by ID
+     */
+>>>>>>> 8e05a6a8d98d4f2463ae6585d313e11586671536
     public ApplicationResponseDTO getApplication(Long id) {
         log.info("🔍 Fetching application with id: {}", id);
         Application application = applicationRepository.findById(id)
@@ -118,6 +166,12 @@ public class ApplicationService {
         return mapToResponseDTO(application);
     }
 
+<<<<<<< HEAD
+=======
+    /**
+     * Get application by Tracking ID
+     */
+>>>>>>> 8e05a6a8d98d4f2463ae6585d313e11586671536
     public ApplicationResponseDTO getApplicationByTrackingId(String trackingId) {
         log.info("🔍 Fetching application with tracking ID: {}", trackingId);
         Application application = applicationRepository.findByTrackingId(trackingId)
@@ -125,6 +179,12 @@ public class ApplicationService {
         return mapToResponseDTO(application);
     }
 
+<<<<<<< HEAD
+=======
+    /**
+     * Get application status by Tracking ID (for applicants)
+     */
+>>>>>>> 8e05a6a8d98d4f2463ae6585d313e11586671536
     public StatusResponseDTO getApplicationStatus(String trackingId) {
         log.info("🔍 Checking status for Tracking ID: {}", trackingId);
 
@@ -144,6 +204,12 @@ public class ApplicationService {
                 .build();
     }
 
+<<<<<<< HEAD
+=======
+    /**
+     * Get all applications
+     */
+>>>>>>> 8e05a6a8d98d4f2463ae6585d313e11586671536
     public List<ApplicationResponseDTO> getAllApplications() {
         log.info("📋 Fetching all applications");
         return applicationRepository.findAll().stream()
@@ -155,7 +221,13 @@ public class ApplicationService {
     // FEATURE 3: HR ADMIN METHODS
     // ========================================
 
+<<<<<<< HEAD
     // ✅ GET ALL APPLICATIONS FOR ADMIN
+=======
+    /**
+     * Get all applications for admin
+     */
+>>>>>>> 8e05a6a8d98d4f2463ae6585d313e11586671536
     public List<AdminApplicationResponseDTO> getAllApplicationsForAdmin() {
         log.info("📋 Admin: Fetching all applications");
         return applicationRepository.findAll().stream()
@@ -163,7 +235,13 @@ public class ApplicationService {
                 .collect(Collectors.toList());
     }
 
+<<<<<<< HEAD
     // ✅ GET APPLICATIONS BY STATUS
+=======
+    /**
+     * Get applications by status for admin
+     */
+>>>>>>> 8e05a6a8d98d4f2463ae6585d313e11586671536
     public List<AdminApplicationResponseDTO> getApplicationsByStatusForAdmin(String status) {
         log.info("📋 Admin: Fetching applications with status: {}", status);
 
@@ -179,7 +257,13 @@ public class ApplicationService {
                 .collect(Collectors.toList());
     }
 
+<<<<<<< HEAD
     // ✅ GET APPLICATION BY ID FOR ADMIN
+=======
+    /**
+     * Get application by ID for admin
+     */
+>>>>>>> 8e05a6a8d98d4f2463ae6585d313e11586671536
     public AdminApplicationResponseDTO getApplicationByIdForAdmin(Long id) {
         log.info("🔍 Admin: Fetching application with ID: {}", id);
         Application application = applicationRepository.findById(id)
@@ -187,7 +271,13 @@ public class ApplicationService {
         return mapToAdminDTO(application);
     }
 
+<<<<<<< HEAD
     // ✅ REVIEW APPLICATION (Approve/Reject)
+=======
+    /**
+     * Review application (approve/reject)
+     */
+>>>>>>> 8e05a6a8d98d4f2463ae6585d313e11586671536
     @Transactional
     public AdminApplicationResponseDTO reviewApplication(Long id, String decision, String notes, String reviewer) {
         log.info("📝 Reviewing application ID: {} by: {}", id, reviewer);
@@ -195,12 +285,20 @@ public class ApplicationService {
         Application application = applicationRepository.findById(id)
                 .orElseThrow(() -> new ApplicationNotFoundException("Application not found with ID: " + id));
 
+<<<<<<< HEAD
+=======
+        // Check if application can be reviewed
+>>>>>>> 8e05a6a8d98d4f2463ae6585d313e11586671536
         if (!application.getStatus().isReviewable()) {
             throw new InvalidStatusException(
                     "Application cannot be reviewed. Current status: " + application.getStatus()
             );
         }
 
+<<<<<<< HEAD
+=======
+        // Validate decision
+>>>>>>> 8e05a6a8d98d4f2463ae6585d313e11586671536
         ApplicationStatus newStatus;
         try {
             newStatus = ApplicationStatus.valueOf(decision.toUpperCase());
@@ -212,6 +310,10 @@ public class ApplicationService {
             throw new IllegalArgumentException("Decision must be ADMITTED or REJECTED");
         }
 
+<<<<<<< HEAD
+=======
+        // Update application
+>>>>>>> 8e05a6a8d98d4f2463ae6585d313e11586671536
         application.setStatus(newStatus);
         application.setHrNotes(notes);
         application.setReviewedAt(LocalDateTime.now());
@@ -223,7 +325,13 @@ public class ApplicationService {
         return mapToAdminDTO(updated);
     }
 
+<<<<<<< HEAD
     // ✅ DELETE APPLICATION
+=======
+    /**
+     * Delete application
+     */
+>>>>>>> 8e05a6a8d98d4f2463ae6585d313e11586671536
     @Transactional
     public void deleteApplication(Long id) {
         log.info("🗑️ Deleting application with id: {}", id);
@@ -233,7 +341,13 @@ public class ApplicationService {
         log.info("✅ Application deleted successfully!");
     }
 
+<<<<<<< HEAD
     // ✅ GET APPLICATION STATISTICS
+=======
+    /**
+     * Get application statistics for admin dashboard
+     */
+>>>>>>> 8e05a6a8d98d4f2463ae6585d313e11586671536
     public Map<String, Object> getApplicationStats() {
         Map<String, Object> stats = new HashMap<>();
         stats.put("total", applicationRepository.count());
@@ -249,6 +363,12 @@ public class ApplicationService {
     // HELPER METHODS
     // ========================================
 
+<<<<<<< HEAD
+=======
+    /**
+     * Convert Application entity to AdminApplicationResponseDTO
+     */
+>>>>>>> 8e05a6a8d98d4f2463ae6585d313e11586671536
     private AdminApplicationResponseDTO mapToAdminDTO(Application application) {
         return AdminApplicationResponseDTO.builder()
                 .id(application.getId())
@@ -267,6 +387,12 @@ public class ApplicationService {
                 .build();
     }
 
+<<<<<<< HEAD
+=======
+    /**
+     * Convert Application entity to ApplicationResponseDTO
+     */
+>>>>>>> 8e05a6a8d98d4f2463ae6585d313e11586671536
     private ApplicationResponseDTO mapToResponseDTO(Application application) {
         ApplicationResponseDTO response = new ApplicationResponseDTO();
         response.setId(application.getId());
@@ -280,7 +406,13 @@ public class ApplicationService {
         return response;
     }
 
+<<<<<<< HEAD
 
+=======
+    /**
+     * Generate unique tracking ID
+     */
+>>>>>>> 8e05a6a8d98d4f2463ae6585d313e11586671536
     private String generateTrackingId() {
         return "APP-" + UUID.randomUUID().toString().substring(0, 8).toUpperCase();
     }
