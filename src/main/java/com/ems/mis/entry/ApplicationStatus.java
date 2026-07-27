@@ -2,10 +2,10 @@
 package com.ems.mis.entry;
 
 public enum ApplicationStatus {
-    PENDING("Your application is waiting for review by HR"),
+    PENDING("Your application is waiting for reviewer"),
     REVIEWED("Your application has been reviewed"),
-    ADMITTED("Congratulations! Your application has been approved"),
-    REJECTED("We regret to inform you that your application has been rejected");
+    ADMITTED(" Your application has been approved"),
+    REJECTED(" your application has been rejected");
 
     private final String description;
 
