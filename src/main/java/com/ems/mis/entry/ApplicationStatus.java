@@ -1,6 +1,5 @@
 
 package com.ems.mis.entry;
-
 public enum ApplicationStatus {
     PENDING("Your application is waiting for reviewer"),
     REVIEWED("Your application has been reviewed"),
