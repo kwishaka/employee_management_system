@@ -23,5 +23,9 @@ public class ApplicationRequestDTO {
 
     private String phone;
 
-    private String position;  // ✅ Add this field
+    private String position;  //
+
+
+    // Add this field
 }
+                                                                                                                                                                                                                                                                        

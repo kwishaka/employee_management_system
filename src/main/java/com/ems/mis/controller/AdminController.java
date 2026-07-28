@@ -24,21 +24,21 @@ public class AdminController {
 
     @GetMapping("/applications")
     public ResponseEntity<List<AdminApplicationResponseDTO>> getAllApplications() {
-        log.info("📋 Admin: Fetching all applications");
+        log.info(" Admin: Fetching all applications");
         return ResponseEntity.ok(applicationService.getAllApplicationsForAdmin());
     }
 
     @GetMapping("/applications/status/{status}")
     public ResponseEntity<List<AdminApplicationResponseDTO>> getApplicationsByStatus(
             @PathVariable String status) {
-        log.info("📋 Admin: Fetching applications with status: {}", status);
+        log.info(" Admin: Fetching applications with status: {}", status);
         return ResponseEntity.ok(applicationService.getApplicationsByStatusForAdmin(status));
     }
 
     @GetMapping("/applications/{id}")
     public ResponseEntity<AdminApplicationResponseDTO> getApplicationById(
             @PathVariable Long id) {
-        log.info("🔍 Admin: Fetching application ID: {}", id);
+        log.info(" Admin: Fetching application ID: {}", id);
         return ResponseEntity.ok(applicationService.getApplicationByIdForAdmin(id));
     }
 
@@ -52,7 +52,7 @@ public class AdminController {
                 reviewRequest.getDecision(),
                 reviewRequest.getNotes(),
                 reviewRequest.getReviewer()
-        ));
+       ));
     }
 
     @DeleteMapping("/applications/{id}")

@@ -16,12 +16,10 @@ public enum ApplicationStatus {
         return description;
     }
 
-    // ✅ Add this method - checks if application can be reviewed
     public boolean isReviewable() {
         return this == PENDING || this == REVIEWED;
     }
 
-    // ✅ Add this method - checks if status is final
     public boolean isFinal() {
         return this == ADMITTED || this == REJECTED;
     }
