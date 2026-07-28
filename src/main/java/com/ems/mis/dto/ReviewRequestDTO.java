@@ -14,9 +14,9 @@ import lombok.NoArgsConstructor;
 public class ReviewRequestDTO {
 
     @NotNull(message = "Decision is required")
-    private String decision; // ADMITTED or REJECTED
+    private String decision; 
 
-    private String notes; // HR comments
+    private String notes; 
 
     @NotBlank(message = "Reviewer name is required")
     private String reviewer;

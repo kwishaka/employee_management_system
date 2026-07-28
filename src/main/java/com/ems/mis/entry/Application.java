@@ -45,7 +45,6 @@ public class Application {
     @Column(name = "reviewed_by", length = 100)
     private String reviewedBy;
 
-    // ===== Getters and Setters =====
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 
