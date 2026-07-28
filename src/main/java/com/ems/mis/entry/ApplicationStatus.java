@@ -1,10 +1,10 @@
+
 package com.ems.mis.entry;
 public enum ApplicationStatus {
-    PENDING("Application is pending review"),
-    REVIEWED("Application has been reviewed"),
-    ADMITTED("Application has been admitted"),
-    REJECTED("Application has been rejected");
-
+   PENDING("Application is pending review"),
+   REVIEWED("Application has been reviewed"),
+   ADMITTED("Application has been admitted"),
+   REJECTED("Application has been rejected");
     private final String description;
 
     ApplicationStatus(String description) {
@@ -21,5 +21,10 @@ public enum ApplicationStatus {
 
     public boolean isFinal() {
         return this == ADMITTED || this == REJECTED;
+    }
+
+    @Override
+    public String toString() {
+        return this.name();
     }
 }
