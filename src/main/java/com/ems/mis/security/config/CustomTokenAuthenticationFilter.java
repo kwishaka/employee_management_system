@@ -21,8 +21,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public class CustomTokenAuthenticationFilter extends OncePerRequestFilter {
 
     private final UserDetailsService userDetailsService;
-
-    // ✅ In-memory token store (for 6-character tokens)
+)
     private final Map<String, String> tokenStore = new ConcurrentHashMap<>();
 
     public void storeToken(String token, String username) {
@@ -52,7 +51,6 @@ public class CustomTokenAuthenticationFilter extends OncePerRequestFilter {
 
         token = authHeader.substring(7);
 
-        // ✅ Validate 6-character token
         if (validateToken(token)) {
             String username = getUsernameFromToken(token);
             if (username != null) {

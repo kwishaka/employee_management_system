@@ -31,22 +31,18 @@ public class AuthService {
         }
         if (userRepository.existsByEmail(request.getEmail())) {
             throw new RuntimeException("Email already registered");
-        }
-
-        // ✅ Check if username is "hr_admin" or email contains "admin"
-        UserRole role = UserRole.APPLICANT;  // Default role
-
+        }"
+        UserRole role = UserRole.APPLICANT;  
         if ("hr_admin".equalsIgnoreCase(request.getUsername()) ||
                 request.getEmail().toLowerCase().contains("admin")) {
-            role = UserRole.HR_ADMIN;  // ✅ Assign HR_ADMIN role
+            role = UserRole.HR_ADMIN;  
         }
-
         User user = User.builder()
                 .username(request.getUsername())
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
                 .fullName(request.getFullName())
-                .role(role)  // ✅ Dynamic role assignment
+                .role(role)  
                 .build();
 
         userRepository.save(user);
