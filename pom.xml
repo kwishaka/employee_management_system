@@ -101,7 +101,6 @@
                     </excludes>
                 </configuration>
             </plugin>
-            <!-- ✅ ADD THIS COMPILER PLUGIN -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
