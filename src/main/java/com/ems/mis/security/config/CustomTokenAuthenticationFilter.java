@@ -21,7 +21,6 @@ import java.util.concurrent.ConcurrentHashMap;
 public class CustomTokenAuthenticationFilter extends OncePerRequestFilter {
 
     private final UserDetailsService userDetailsService;
-)
     private final Map<String, String> tokenStore = new ConcurrentHashMap<>();
 
     public void storeToken(String token, String username) {
