@@ -1,0 +1,54 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ems-deployment
+  labels:
+    app: ems
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: ems
+  template:
+    metadata:
+      labels:
+        app: ems
+    spec:
+      containers:
+        - name: ems
+          # Replace <IMAGE_PLACEHOLDER> with your image, e.g. ghcr.io/kwishaka/employee_management_system:latest
+          image: "<IMAGE_PLACEHOLDER>"
+          ports:
+            - containerPort: 8080
+          env:
+            - name: SPRING_DATASOURCE_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: ems-config
+                  key: SPRING_DATASOURCE_URL
+            - name: SPRING_DATASOURCE_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: ems-db-secret
+                  key: username
+            - name: SPRING_DATASOURCE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: ems-db-secret
+                  key: password
+            - name: SPRING_PROFILES_ACTIVE
+              value: prod
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ems-service
+spec:
+  selector:
+    app: ems
+  ports:
+    - name: http
+      protocol: TCP
+      port: 80
+      targetPort: 8080
+  type: LoadBalancer

@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: ems-config
+data:
+  # Replace with your production DB host/name
+  SPRING_DATASOURCE_URL: "jdbc:mysql://<DB_HOST>:3306/<DB_NAME>"
