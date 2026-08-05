@@ -1,6 +1,4 @@
 package com.ems.mis.service;
-
-
 import com.ems.mis.dto.AdminApplicationResponseDTO;
 import com.ems.mis.dto.ApplicationRequestDTO;
 import com.ems.mis.dto.ApplicationResponseDTO;
@@ -15,7 +13,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
-
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.HashMap;
@@ -126,7 +123,7 @@ public class ApplicationService {
     }
 
     public StatusResponseDTO getApplicationStatus(String trackingId) {
-        log.info("🔍 Checking status for Tracking ID: {}", trackingId);
+        log.info(" Checking status for Tracking ID: {}", trackingId);
 
         Application application = applicationRepository.findByTrackingId(trackingId)
                 .orElseThrow(() -> new ApplicationNotFoundException("Application not found with tracking ID: " + trackingId));
@@ -157,13 +154,13 @@ public class ApplicationService {
 
     //  GET ALL APPLICATIONS FOR ADMIN
     public List<AdminApplicationResponseDTO> getAllApplicationsForAdmin() {
-        log.info("📋 Admin: Fetching all applications");
+        log.info(" Admin: Fetching all applications");
         return applicationRepository.findAll().stream()
                 .map(this::mapToAdminDTO)
                 .collect(Collectors.toList());
     }
 
-    //  GET APPLICATIONS BY STATUS
+
     public List<AdminApplicationResponseDTO> getApplicationsByStatusForAdmin(String status) {
         log.info(" Admin: Fetching applications with status: {}", status);
 
@@ -226,7 +223,7 @@ public class ApplicationService {
     // DELETE APPLICATION
     @Transactional
     public void deleteApplication(Long id) {
-        log.info("🗑 Deleting application with id: {}", id);
+        log.info("Deleting application with id: {}", id);
         Application application = applicationRepository.findById(id)
                 .orElseThrow(() -> new ApplicationNotFoundException("Application not found with id: " + id));
         applicationRepository.delete(application);

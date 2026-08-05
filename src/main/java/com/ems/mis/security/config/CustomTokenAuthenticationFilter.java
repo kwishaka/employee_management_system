@@ -1,5 +1,4 @@
 package com.ems.mis.security.config;
-
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -22,21 +21,17 @@ public class CustomTokenAuthenticationFilter extends OncePerRequestFilter {
 
     private final UserDetailsService userDetailsService;
 
-    // ✅ In-memory token store (for 6-character tokens)
-    private final Map<String, String> tokenStore = new ConcurrentHashMap<>();
 
+    private final Map<String, String> tokenStore = new ConcurrentHashMap<>();
     public void storeToken(String token, String username) {
         tokenStore.put(token, username);
     }
-
     public boolean validateToken(String token) {
         return tokenStore.containsKey(token);
     }
-
     public String getUsernameFromToken(String token) {
         return tokenStore.get(token);
     }
-
     @Override
     protected void doFilterInternal(HttpServletRequest request,
                                     HttpServletResponse response,
@@ -52,7 +47,7 @@ public class CustomTokenAuthenticationFilter extends OncePerRequestFilter {
 
         token = authHeader.substring(7);
 
-        // ✅ Validate 6-character token
+        // Validate 6-character token
         if (validateToken(token)) {
             String username = getUsernameFromToken(token);
             if (username != null) {
@@ -65,7 +60,6 @@ public class CustomTokenAuthenticationFilter extends OncePerRequestFilter {
                 SecurityContextHolder.getContext().setAuthentication(authToken);
             }
         }
-
         filterChain.doFilter(request, response);
     }
 }

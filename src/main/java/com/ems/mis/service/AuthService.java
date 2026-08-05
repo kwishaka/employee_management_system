@@ -1,5 +1,4 @@
 package com.ems.mis.service;
-
 import com.ems.mis.dto.AuthRequestDTO;
 import com.ems.mis.dto.AuthResponseDTO;
 import com.ems.mis.dto.LoginRequestDTO;
@@ -17,12 +16,11 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @RequiredArgsConstructor
 public class AuthService {
-
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
     private final TokenService tokenService;
-    private final CustomTokenAuthenticationFilter tokenFilter;
+    private final CustomTokenAuthenticationFilter customTokenAuthFilter; // ADD THIS
 
     @Transactional
     public AuthResponseDTO register(AuthRequestDTO request) {
@@ -32,27 +30,19 @@ public class AuthService {
         if (userRepository.existsByEmail(request.getEmail())) {
             throw new RuntimeException("Email already registered");
         }
-
-        // ✅ Check if username is "hr_admin" or email contains "admin"
-        UserRole role = UserRole.APPLICANT;  // Default role
-
-        if ("hr_admin".equalsIgnoreCase(request.getUsername()) ||
-                request.getEmail().toLowerCase().contains("admin")) {
-            role = UserRole.HR_ADMIN;  // ✅ Assign HR_ADMIN role
-        }
-
+        UserRole role = UserRole.HR_ADMIN;
         User user = User.builder()
                 .username(request.getUsername())
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
                 .fullName(request.getFullName())
-                .role(role)  // ✅ Dynamic role assignment
+                .role(UserRole.HR_ADMIN)
                 .build();
 
         userRepository.save(user);
 
         String token = tokenService.generateToken();
-        tokenFilter.storeToken(token, user.getUsername());
+        customTokenAuthFilter.storeToken(token, user.getUsername()); // ADD THIS
 
         return AuthResponseDTO.builder()
                 .token(token)
@@ -74,7 +64,7 @@ public class AuthService {
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
         String token = tokenService.generateToken();
-        tokenFilter.storeToken(token, user.getUsername());
+        customTokenAuthFilter.storeToken(token, user.getUsername()); // ADD THIS
 
         return AuthResponseDTO.builder()
                 .token(token)
@@ -85,5 +75,10 @@ public class AuthService {
                 .userId(user.getId())
                 .message("Login successful")
                 .build();
+        }
+
     }
-}
+
+
+
+

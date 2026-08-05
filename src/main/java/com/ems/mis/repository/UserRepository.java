@@ -1,5 +1,4 @@
 package com.ems.mis.repository;
-
 import com.ems.mis.entry.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

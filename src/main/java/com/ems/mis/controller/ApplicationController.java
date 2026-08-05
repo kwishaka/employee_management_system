@@ -1,8 +1,8 @@
 package com.ems.mis.controller;
-
 import com.ems.mis.dto.ApplicationRequestDTO;
 import com.ems.mis.dto.ApplicationResponseDTO;
 import com.ems.mis.service.ApplicationService;
+import com.ems.mis.dto.StatusResponseDTO;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -10,18 +10,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
 import java.io.IOException;
-
 @Slf4j
 @RestController
 @RequestMapping("/api/applications")
 @RequiredArgsConstructor
 public class ApplicationController {
-
     private final ApplicationService applicationService;
-
-
     @PostMapping("/submit")
     public ResponseEntity<ApplicationResponseDTO> submitApplication(
             @Valid @RequestPart("application") ApplicationRequestDTO request,
@@ -37,5 +32,15 @@ public class ApplicationController {
         );
 
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
+    }
+    @GetMapping("/track/{trackingId}")
+    public ResponseEntity<StatusResponseDTO> trackApplication(
+            @PathVariable String trackingId) {
+
+        log.info(" Tracking application: {}", trackingId);
+
+        StatusResponseDTO response = applicationService.getApplicationStatus(trackingId);
+
+        return ResponseEntity.ok(response);
     }
 }
