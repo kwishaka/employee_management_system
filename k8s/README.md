@@ -2,15 +2,22 @@
 
 This directory contains example Kubernetes manifests to deploy the application.
 
-Files added:
-- deployment.yaml — Deployment (2 replicas) and Service (LoadBalancer). Edit the image placeholder before deploying.
-- secret.yaml — Template for DB username/password (stringData). Replace placeholders or use kubectl to create the secret.
+Files added/updated:
+- deployment.yaml — Deployment (2 replicas) and Service (LoadBalancer). Image is a placeholder: "<IMAGE_PLACEHOLDER>". Edit to your image before applying or use kubectl set image.
+- secret.yaml — Template for DB username/password (stringData). Replace placeholders or create the secret with kubectl create secret generic.
 - configmap.yaml — Template for SPRING_DATASOURCE_URL.
+- README.md — this file.
+
+What changed in this update:
+- pom.xml updated to compile with Java 21.
+- Added Spring Boot Actuator dependency to enable /actuator/health which is used by liveness/readiness probes.
+- Added src/main/resources/application-prod.properties which reads DB credentials from environment variables and sets production hibernate behavior.
+- deployment.yaml now includes readiness and liveness probes and resource requests/limits.
 
 Quick deploy steps (recommended):
 
 1. Build and push your Docker image to a registry. Example (GitHub Container Registry):
-   - Build locally or via CI and push: ghcr.io/OWNER/employee-management-system:latest
+   - Build locally or via CI and push: ghcr.io/kwishaka/employee_management_system:latest
 
 2. Update the image in k8s/deployment.yaml:
    - Replace <IMAGE_PLACEHOLDER> with your registry image (e.g. ghcr.io/kwishaka/employee_management_system:latest)
@@ -31,27 +38,27 @@ Quick deploy steps (recommended):
    OR apply the file:
    kubectl apply -f k8s/configmap.yaml
 
-5. Apply manifests:
+5. Apply manifests (apply secret & configmap first, then deployment):
 
    kubectl apply -f k8s/secret.yaml
    kubectl apply -f k8s/configmap.yaml
    kubectl apply -f k8s/deployment.yaml
 
-6. Check rollout and service:
+6. Verify rollout and service:
 
+   kubectl rollout status deployment/ems-deployment
    kubectl get pods -l app=ems
-   kubectl describe pod <pod-name>
    kubectl get svc ems-service
 
-7. To update image:
+7. Test locally via port-forward if your cluster doesn’t provide external LB IP:
 
-   kubectl set image deployment/ems-deployment ems=<YOUR_IMAGE>:tag
+   kubectl port-forward svc/ems-service 8080:80
+   Then open http://localhost:8080
 
 Notes & recommendations:
-- This repo currently uses an H2 in-memory DB by default. For production you should use MySQL (or another persistent DB) and the SPRING_DATASOURCE_URL / credentials provided via the ConfigMap / Secret above.
-- Consider adding readiness/liveness probes (HTTP /actuator/health) if you add Spring Boot Actuator.
 - Do not store production credentials in Git. Use secrets or an external secret manager.
-- Recommended follow-ups (I can add these for you):
-  - Update pom.xml compiler plugin to use Java 21 (or align java.version).
-  - Add application-prod.properties to read DB settings from env vars.
-  - Add a GitHub Actions workflow to build and push the image to your registry.
+- If you use a managed DB ensure network rules allow connections from your cluster nodes.
+- Consider enabling HTTPS at the Ingress/Load Balancer layer.
+- For production, set spring.jpa.hibernate.ddl-auto carefully (validate/migrate/none) according to your schema migration process.
+
+If you want, I can also add a GitHub Actions workflow to build and push Docker images to GHCR and update the deployment automatically. If so, tell me which registry you prefer and I will add the workflow and instructions to set repository secrets.
