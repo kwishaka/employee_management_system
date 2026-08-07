@@ -1,4 +1,8 @@
 package com.ems.mis.repository;
+<<<<<<< HEAD
+=======
+
+>>>>>>> fe4d0cb76b8b8c84e96964f43d230158edc6d715
 import com.ems.mis.entry.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

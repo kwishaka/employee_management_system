@@ -1,11 +1,18 @@
-package com.ems.mis.entry;
 
+package com.ems.mis.entry;
 public enum ApplicationStatus {
+<<<<<<< HEAD
     PENDING("application is waiting for review by HR"),
     REVIEWED("Your application has been reviewed"),
     ADMITTED(" Your application has been approved"),
     REJECTED(" your application has been rejected");
 
+=======
+   PENDING("Application is pending review"),
+   REVIEWED("Application has been reviewed"),
+   ADMITTED("Application has been admitted"),
+   REJECTED("Application has been rejected");
+>>>>>>> fe4d0cb76b8b8c84e96964f43d230158edc6d715
     private final String description;
 
     ApplicationStatus(String description) {

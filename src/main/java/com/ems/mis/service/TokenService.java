@@ -14,4 +14,8 @@ public class TokenService {
         }
         return token.toString();
     }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> fe4d0cb76b8b8c84e96964f43d230158edc6d715

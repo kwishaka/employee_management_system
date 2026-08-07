@@ -1,4 +1,8 @@
 package com.ems.mis.entry;
+<<<<<<< HEAD
+=======
+
+>>>>>>> fe4d0cb76b8b8c84e96964f43d230158edc6d715
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

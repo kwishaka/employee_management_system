@@ -1,4 +1,8 @@
 package com.ems.mis.service;
+<<<<<<< HEAD
+=======
+
+>>>>>>> fe4d0cb76b8b8c84e96964f43d230158edc6d715
 import com.ems.mis.dto.AdminApplicationResponseDTO;
 import com.ems.mis.dto.ApplicationRequestDTO;
 import com.ems.mis.dto.ApplicationResponseDTO;
@@ -33,6 +37,9 @@ public class ApplicationService {
     // FEATURE 1: SUBMIT APPLICATION
     // ========================================
 
+    /**
+     * Submit application with files (multipart/form-data)
+     */
     @Transactional
     public ApplicationResponseDTO submitApplication(
             ApplicationRequestDTO request,
@@ -41,10 +48,12 @@ public class ApplicationService {
 
         log.info(" Processing application submission for: {}", request.getEmail());
 
+        // Check if email already exists
         if (applicationRepository.existsByEmail(request.getEmail())) {
             throw new RuntimeException("Email already registered. Please use a different email.");
         }
 
+        // Store files if provided
         String resumeUrl = null;
         String idDocumentUrl = null;
 
@@ -58,8 +67,10 @@ public class ApplicationService {
             log.info(" ID Document stored: {}", idDocumentUrl);
         }
 
+        // Generate tracking ID
         String trackingId = generateTrackingId();
 
+        // Create application
         Application application = new Application();
         application.setTrackingId(trackingId);
         application.setFullName(request.getFullName());
@@ -69,19 +80,25 @@ public class ApplicationService {
         application.setStatus(ApplicationStatus.PENDING);
         application.setAppliedDate(LocalDateTime.now());
 
+        // Save to database
         Application saved = applicationRepository.save(application);
 
         log.info(" Application submitted! Tracking ID: {}", trackingId);
 
+        // Build response
         ApplicationResponseDTO response = mapToResponseDTO(saved);
         response.setMessage("Application submitted successfully! Your Tracking ID is: " + trackingId);
         return response;
     }
 
+    /**
+     * Create application without files (JSON only)
+     */
     @Transactional
     public ApplicationResponseDTO createApplication(ApplicationRequestDTO request) {
         log.info(" Creating new application for: {}", request.getFullName());
 
+        // Check if email already exists
         if (applicationRepository.existsByEmail(request.getEmail())) {
             throw new RuntimeException("Email already registered. Please use a different email.");
         }
@@ -108,6 +125,9 @@ public class ApplicationService {
     // FEATURE 2: GET APPLICATIONS
     // ========================================
 
+    /**
+     * Get application by ID
+     */
     public ApplicationResponseDTO getApplication(Long id) {
         log.info(" Fetching application with id: {}", id);
         Application application = applicationRepository.findById(id)
@@ -115,6 +135,9 @@ public class ApplicationService {
         return mapToResponseDTO(application);
     }
 
+    /**
+     * Get application by Tracking ID
+     */
     public ApplicationResponseDTO getApplicationByTrackingId(String trackingId) {
         log.info(" Fetching application with tracking ID: {}", trackingId);
         Application application = applicationRepository.findByTrackingId(trackingId)
@@ -122,6 +145,9 @@ public class ApplicationService {
         return mapToResponseDTO(application);
     }
 
+    /**
+     * Get application status by Tracking ID (for applicants)
+     */
     public StatusResponseDTO getApplicationStatus(String trackingId) {
         log.info(" Checking status for Tracking ID: {}", trackingId);
 
@@ -141,6 +167,9 @@ public class ApplicationService {
                 .build();
     }
 
+    /**
+     * Get all applications
+     */
     public List<ApplicationResponseDTO> getAllApplications() {
         log.info(" Fetching all applications");
         return applicationRepository.findAll().stream()
@@ -152,7 +181,13 @@ public class ApplicationService {
     // FEATURE 3: HR ADMIN METHODS
     // ========================================
 
+<<<<<<< HEAD
     //  GET ALL APPLICATIONS FOR ADMIN
+=======
+    /**
+     * Get all applications for admin
+     */
+>>>>>>> fe4d0cb76b8b8c84e96964f43d230158edc6d715
     public List<AdminApplicationResponseDTO> getAllApplicationsForAdmin() {
         log.info(" Admin: Fetching all applications");
         return applicationRepository.findAll().stream()
@@ -160,7 +195,13 @@ public class ApplicationService {
                 .collect(Collectors.toList());
     }
 
+<<<<<<< HEAD
 
+=======
+    /**
+     * Get applications by status for admin
+     */
+>>>>>>> fe4d0cb76b8b8c84e96964f43d230158edc6d715
     public List<AdminApplicationResponseDTO> getApplicationsByStatusForAdmin(String status) {
         log.info(" Admin: Fetching applications with status: {}", status);
 
@@ -176,7 +217,13 @@ public class ApplicationService {
                 .collect(Collectors.toList());
     }
 
+<<<<<<< HEAD
     //  GET APPLICATION BY ID FOR ADMIN
+=======
+    /**
+     * Get application by ID for admin
+     */
+>>>>>>> fe4d0cb76b8b8c84e96964f43d230158edc6d715
     public AdminApplicationResponseDTO getApplicationByIdForAdmin(Long id) {
         log.info("Admin: Fetching application with ID: {}", id);
         Application application = applicationRepository.findById(id)
@@ -184,7 +231,13 @@ public class ApplicationService {
         return mapToAdminDTO(application);
     }
 
+<<<<<<< HEAD
     //  REVIEW APPLICATION (Approve/Reject)
+=======
+    /**
+     * Review application (approve/reject)
+     */
+>>>>>>> fe4d0cb76b8b8c84e96964f43d230158edc6d715
     @Transactional
     public AdminApplicationResponseDTO reviewApplication(Long id, String decision, String notes, String reviewer) {
         log.info(" Reviewing application ID: {} by: {}", id, reviewer);
@@ -192,12 +245,14 @@ public class ApplicationService {
         Application application = applicationRepository.findById(id)
                 .orElseThrow(() -> new ApplicationNotFoundException("Application not found with ID: " + id));
 
+        // Check if application can be reviewed
         if (!application.getStatus().isReviewable()) {
             throw new InvalidStatusException(
                     "Application cannot be reviewed. Current status: " + application.getStatus()
             );
         }
 
+        // Validate decision
         ApplicationStatus newStatus;
         try {
             newStatus = ApplicationStatus.valueOf(decision.toUpperCase());
@@ -209,6 +264,7 @@ public class ApplicationService {
             throw new IllegalArgumentException("Decision must be ADMITTED or REJECTED");
         }
 
+        // Update application
         application.setStatus(newStatus);
         application.setHrNotes(notes);
         application.setReviewedAt(LocalDateTime.now());
@@ -220,7 +276,13 @@ public class ApplicationService {
         return mapToAdminDTO(updated);
     }
 
+<<<<<<< HEAD
     // DELETE APPLICATION
+=======
+    /**
+     * Delete application
+     */
+>>>>>>> fe4d0cb76b8b8c84e96964f43d230158edc6d715
     @Transactional
     public void deleteApplication(Long id) {
         log.info("Deleting application with id: {}", id);
@@ -230,7 +292,13 @@ public class ApplicationService {
         log.info(" Application deleted successfully!");
     }
 
+<<<<<<< HEAD
     // GET APPLICATION STATISTICS
+=======
+    /**
+     * Get application statistics for admin dashboard
+     */
+>>>>>>> fe4d0cb76b8b8c84e96964f43d230158edc6d715
     public Map<String, Object> getApplicationStats() {
         Map<String, Object> stats = new HashMap<>();
         stats.put("total", applicationRepository.count());
@@ -246,6 +314,9 @@ public class ApplicationService {
     // HELPER METHODS
     // ========================================
 
+    /**
+     * Convert Application entity to AdminApplicationResponseDTO
+     */
     private AdminApplicationResponseDTO mapToAdminDTO(Application application) {
         return AdminApplicationResponseDTO.builder()
                 .id(application.getId())
@@ -264,6 +335,9 @@ public class ApplicationService {
                 .build();
     }
 
+    /**
+     * Convert Application entity to ApplicationResponseDTO
+     */
     private ApplicationResponseDTO mapToResponseDTO(Application application) {
         ApplicationResponseDTO response = new ApplicationResponseDTO();
         response.setId(application.getId());
@@ -277,7 +351,9 @@ public class ApplicationService {
         return response;
     }
 
-
+    /**
+     * Generate unique tracking ID
+     */
     private String generateTrackingId() {
         return "APP-" + UUID.randomUUID().toString().substring(0, 8).toUpperCase();
     }
