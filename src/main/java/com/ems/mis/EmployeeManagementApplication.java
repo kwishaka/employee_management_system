@@ -1,13 +1,17 @@
 package com.ems.mis;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import io.swagger.v3.oas.models.OpenAPI;
-import io.swagger.v3.oas.models.servers.Server;
+
+import io.swagger.v3.oas.annotations.OpenAPIDefinition;
+import io.swagger.v3.oas.annotations.servers.Server;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Bean;
 
-import java.util.List;
+@OpenAPIDefinition(
+        servers = {
+                @Server(url = "https://employeemanagementsystem-production-89b4.up.railway.app/", description = "Production Live Server")
+        }
+)
 @SpringBootApplication
 public class EmployeeManagementApplication {
 
@@ -15,16 +19,5 @@ public class EmployeeManagementApplication {
         SpringApplication.run(EmployeeManagementApplication.class, args);
     }
 
-    @Bean
-    public OpenAPI customOpenAPI() {
-        Server railwayServer = new Server();
-        railwayServer.setUrl("https://employeemanagementsystem-production-4ff0.up.railway.app");
-        railwayServer.setDescription("Production (Railway)");
 
-        Server localServer = new Server();
-        localServer.setUrl("http://localhost:8080");
-        localServer.setDescription("Local development");
-
-        return new OpenAPI().servers(List.of(railwayServer, localServer));
-    }
 }
