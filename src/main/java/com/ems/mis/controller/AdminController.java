@@ -19,32 +19,26 @@ public class AdminController {
     private final ApplicationService applicationService;
     @GetMapping("/applications")
     public ResponseEntity<List<AdminApplicationResponseDTO>> getAllApplications() {
-<<<<<<< HEAD
+
         log.info(" Admin: Fetching all applications");
-=======
-       
->>>>>>> fe4d0cb76b8b8c84e96964f43d230158edc6d715
+
         return ResponseEntity.ok(applicationService.getAllApplicationsForAdmin());
     }
     @GetMapping("/applications/status/{status}")
     public ResponseEntity<List<AdminApplicationResponseDTO>> getApplicationsByStatus(
             @PathVariable String status) {
-<<<<<<< HEAD
+
 
         log.info(" Admin: Fetching applications with status: {}", status);
-=======
-        
->>>>>>> fe4d0cb76b8b8c84e96964f43d230158edc6d715
+
         return ResponseEntity.ok(applicationService.getApplicationsByStatusForAdmin(status));
     }
     @GetMapping("/applications/{id}")
     public ResponseEntity<AdminApplicationResponseDTO> getApplicationById(
             @PathVariable Long id) {
-<<<<<<< HEAD
+
         log.info(" Admin: Fetching application ID: {}", id);
-=======
-        
->>>>>>> fe4d0cb76b8b8c84e96964f43d230158edc6d715
+
         return ResponseEntity.ok(applicationService.getApplicationByIdForAdmin(id));
     }
     @PutMapping("/applications/{id}/review")

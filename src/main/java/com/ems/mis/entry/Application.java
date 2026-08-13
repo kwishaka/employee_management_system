@@ -32,11 +32,7 @@ public class Application {
     private LocalDateTime reviewedAt;
     @Column(name = "reviewed_by", length = 100)
     private String reviewedBy;
-<<<<<<< HEAD
-    // ===== Getters and Setters =====
-=======
 
->>>>>>> fe4d0cb76b8b8c84e96964f43d230158edc6d715
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
     public String getTrackingId() { return trackingId; }

@@ -25,17 +25,8 @@ public class ApplicationRequestDTO {
     @Size(max = 20, message = "Phone must not exceed 20 characters")
     private String phone;
 
-<<<<<<< HEAD
-    private String position;  //
-
-
-    // Add this field
-=======
     @Size(max = 100, message = "Position must not exceed 100 characters")
-    private String position;  // ✅ Add this field
+    private String position;
 
-    // If you need nationalId for other features, add it here
-    // private String nationalId;
->>>>>>> fe4d0cb76b8b8c84e96964f43d230158edc6d715
 }
                                                                                                                                                                                                                                                                         

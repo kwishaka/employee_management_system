@@ -13,11 +13,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class ApplicationResponseDTO {
     private Long id;
-<<<<<<< HEAD
-    private String trackingId;      
-=======
-    private String trackingId;  // ✅ Add this field
->>>>>>> fe4d0cb76b8b8c84e96964f43d230158edc6d715
+    private String trackingId;
     private String fullName;
     private String email;
     private String phone;

@@ -1,8 +1,5 @@
 package com.ems.mis.security.config;
-<<<<<<< HEAD
-=======
 
->>>>>>> fe4d0cb76b8b8c84e96964f43d230158edc6d715
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -24,8 +21,6 @@ import java.util.concurrent.ConcurrentHashMap;
 public class CustomTokenAuthenticationFilter extends OncePerRequestFilter {
 
     private final UserDetailsService userDetailsService;
-<<<<<<< HEAD
-
 
     private final Map<String, String> tokenStore = new ConcurrentHashMap<>();
     public void storeToken(String token, String username) {
@@ -37,23 +32,9 @@ public class CustomTokenAuthenticationFilter extends OncePerRequestFilter {
     public String getUsernameFromToken(String token) {
         return tokenStore.get(token);
     }
-=======
-)
-    private final Map<String, String> tokenStore = new ConcurrentHashMap<>();
 
-    public void storeToken(String token, String username) {
-        tokenStore.put(token, username);
-    }
 
-    public boolean validateToken(String token) {
-        return tokenStore.containsKey(token);
-    }
 
-    public String getUsernameFromToken(String token) {
-        return tokenStore.get(token);
-    }
-
->>>>>>> fe4d0cb76b8b8c84e96964f43d230158edc6d715
     @Override
     protected void doFilterInternal(HttpServletRequest request,
                                     HttpServletResponse response,
@@ -69,10 +50,6 @@ public class CustomTokenAuthenticationFilter extends OncePerRequestFilter {
 
         token = authHeader.substring(7);
 
-<<<<<<< HEAD
-        // Validate 6-character token
-=======
->>>>>>> fe4d0cb76b8b8c84e96964f43d230158edc6d715
         if (validateToken(token)) {
             String username = getUsernameFromToken(token);
             if (username != null) {
@@ -85,10 +62,7 @@ public class CustomTokenAuthenticationFilter extends OncePerRequestFilter {
                 SecurityContextHolder.getContext().setAuthentication(authToken);
             }
         }
-<<<<<<< HEAD
-=======
 
->>>>>>> fe4d0cb76b8b8c84e96964f43d230158edc6d715
         filterChain.doFilter(request, response);
     }
 }

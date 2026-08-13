@@ -1,16 +1,8 @@
 package com.ems.mis.dto;
-<<<<<<< HEAD
-=======
-
->>>>>>> fe4d0cb76b8b8c84e96964f43d230158edc6d715
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-<<<<<<< HEAD
-=======
-
->>>>>>> fe4d0cb76b8b8c84e96964f43d230158edc6d715
 @Data
 @Builder
 @NoArgsConstructor
