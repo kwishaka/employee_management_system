@@ -1,5 +1,4 @@
 package com.ems.mis.service;
-
 import com.ems.mis.dto.AdminApplicationResponseDTO;
 import com.ems.mis.dto.ApplicationRequestDTO;
 import com.ems.mis.dto.ApplicationResponseDTO;
@@ -14,7 +13,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
-
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.HashMap;
@@ -44,7 +42,7 @@ public class ApplicationService {
             MultipartFile resume,
             MultipartFile idDocument) throws IOException {
 
-        log.info("📝 Processing application submission for: {}", request.getEmail());
+        log.info(" Processing application submission for: {}", request.getEmail());
 
         // Check if email already exists
         if (applicationRepository.existsByEmail(request.getEmail())) {
@@ -57,12 +55,12 @@ public class ApplicationService {
 
         if (resume != null && !resume.isEmpty()) {
             resumeUrl = fileStorageService.storeFile(resume, "resume_" + request.getEmail());
-            log.info("✅ Resume stored: {}", resumeUrl);
+            log.info(" Resume stored: {}", resumeUrl);
         }
 
         if (idDocument != null && !idDocument.isEmpty()) {
             idDocumentUrl = fileStorageService.storeFile(idDocument, "id_" + request.getEmail());
-            log.info("✅ ID Document stored: {}", idDocumentUrl);
+            log.info(" ID Document stored: {}", idDocumentUrl);
         }
 
         // Generate tracking ID
@@ -81,7 +79,7 @@ public class ApplicationService {
         // Save to database
         Application saved = applicationRepository.save(application);
 
-        log.info("✅ Application submitted! Tracking ID: {}", trackingId);
+        log.info(" Application submitted! Tracking ID: {}", trackingId);
 
         // Build response
         ApplicationResponseDTO response = mapToResponseDTO(saved);
@@ -94,7 +92,7 @@ public class ApplicationService {
      */
     @Transactional
     public ApplicationResponseDTO createApplication(ApplicationRequestDTO request) {
-        log.info("📝 Creating new application for: {}", request.getFullName());
+        log.info(" Creating new application for: {}", request.getFullName());
 
         // Check if email already exists
         if (applicationRepository.existsByEmail(request.getEmail())) {
@@ -127,7 +125,7 @@ public class ApplicationService {
      * Get application by ID
      */
     public ApplicationResponseDTO getApplication(Long id) {
-        log.info("🔍 Fetching application with id: {}", id);
+        log.info(" Fetching application with id: {}", id);
         Application application = applicationRepository.findById(id)
                 .orElseThrow(() -> new ApplicationNotFoundException("Application not found with id: " + id));
         return mapToResponseDTO(application);
@@ -137,7 +135,7 @@ public class ApplicationService {
      * Get application by Tracking ID
      */
     public ApplicationResponseDTO getApplicationByTrackingId(String trackingId) {
-        log.info("🔍 Fetching application with tracking ID: {}", trackingId);
+        log.info(" Fetching application with tracking ID: {}", trackingId);
         Application application = applicationRepository.findByTrackingId(trackingId)
                 .orElseThrow(() -> new ApplicationNotFoundException("Application not found with tracking ID: " + trackingId));
         return mapToResponseDTO(application);
@@ -147,7 +145,7 @@ public class ApplicationService {
      * Get application status by Tracking ID (for applicants)
      */
     public StatusResponseDTO getApplicationStatus(String trackingId) {
-        log.info("🔍 Checking status for Tracking ID: {}", trackingId);
+        log.info(" Checking status for Tracking ID: {}", trackingId);
 
         Application application = applicationRepository.findByTrackingId(trackingId)
                 .orElseThrow(() -> new ApplicationNotFoundException("Application not found with tracking ID: " + trackingId));
@@ -169,7 +167,7 @@ public class ApplicationService {
      * Get all applications
      */
     public List<ApplicationResponseDTO> getAllApplications() {
-        log.info("📋 Fetching all applications");
+        log.info(" Fetching all applications");
         return applicationRepository.findAll().stream()
                 .map(this::mapToResponseDTO)
                 .collect(Collectors.toList());
@@ -182,18 +180,17 @@ public class ApplicationService {
     /**
      * Get all applications for admin
      */
+
     public List<AdminApplicationResponseDTO> getAllApplicationsForAdmin() {
-        log.info("📋 Admin: Fetching all applications");
+        log.info(" Admin: Fetching all applications");
         return applicationRepository.findAll().stream()
                 .map(this::mapToAdminDTO)
                 .collect(Collectors.toList());
     }
 
-    /**
-     * Get applications by status for admin
-     */
+
     public List<AdminApplicationResponseDTO> getApplicationsByStatusForAdmin(String status) {
-        log.info("📋 Admin: Fetching applications with status: {}", status);
+        log.info(" Admin: Fetching applications with status: {}", status);
 
         ApplicationStatus applicationStatus;
         try {
@@ -207,22 +204,17 @@ public class ApplicationService {
                 .collect(Collectors.toList());
     }
 
-    /**
-     * Get application by ID for admin
-     */
+
     public AdminApplicationResponseDTO getApplicationByIdForAdmin(Long id) {
-        log.info("🔍 Admin: Fetching application with ID: {}", id);
+        log.info("Admin: Fetching application with ID: {}", id);
         Application application = applicationRepository.findById(id)
                 .orElseThrow(() -> new ApplicationNotFoundException("Application not found with ID: " + id));
         return mapToAdminDTO(application);
     }
 
-    /**
-     * Review application (approve/reject)
-     */
     @Transactional
     public AdminApplicationResponseDTO reviewApplication(Long id, String decision, String notes, String reviewer) {
-        log.info("📝 Reviewing application ID: {} by: {}", id, reviewer);
+        log.info(" Reviewing application ID: {} by: {}", id, reviewer);
 
         Application application = applicationRepository.findById(id)
                 .orElseThrow(() -> new ApplicationNotFoundException("Application not found with ID: " + id));
@@ -242,8 +234,9 @@ public class ApplicationService {
             throw new IllegalArgumentException("Invalid decision. Allowed: ADMITTED, REJECTED");
         }
 
-        if (!newStatus.isFinal()) {
-            throw new IllegalArgumentException("Decision must be ADMITTED or REJECTED");
+        if (newStatus != ApplicationStatus.REVIEWED && !newStatus.isFinal()) {
+            throw new IllegalArgumentException("Decision must be REVIEWED, ADMITTED, or REJECTED");
+
         }
 
         // Update application
@@ -253,26 +246,22 @@ public class ApplicationService {
         application.setReviewedBy(reviewer);
 
         Application updated = applicationRepository.save(application);
-        log.info("✅ Application {} reviewed - Decision: {}", application.getTrackingId(), newStatus);
+        log.info(" Application {} reviewed - Decision: {}", application.getTrackingId(), newStatus);
 
         return mapToAdminDTO(updated);
     }
 
-    /**
-     * Delete application
-     */
     @Transactional
     public void deleteApplication(Long id) {
-        log.info("🗑️ Deleting application with id: {}", id);
+        log.info("Deleting application with id: {}", id);
         Application application = applicationRepository.findById(id)
                 .orElseThrow(() -> new ApplicationNotFoundException("Application not found with id: " + id));
         applicationRepository.delete(application);
-        log.info("✅ Application deleted successfully!");
+        log.info(" Application deleted successfully!");
     }
 
-    /**
-     * Get application statistics for admin dashboard
-     */
+
+
     public Map<String, Object> getApplicationStats() {
         Map<String, Object> stats = new HashMap<>();
         stats.put("total", applicationRepository.count());
@@ -284,9 +273,6 @@ public class ApplicationService {
         return stats;
     }
 
-    // ========================================
-    // HELPER METHODS
-    // ========================================
 
     /**
      * Convert Application entity to AdminApplicationResponseDTO

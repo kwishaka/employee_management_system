@@ -1,6 +1,4 @@
 package com.ems.mis.repository;
-
-
 import com.ems.mis.entry.Application;
 import com.ems.mis.entry.ApplicationStatus;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -15,12 +13,12 @@ import java.util.Optional;
 public interface ApplicationRepository extends JpaRepository<Application, Long> {
 
     Optional<Application> findByTrackingId(String trackingId);
-
     Optional<Application> findByEmail(String email);
 
     boolean existsByEmail(String email);
 
     List<Application> findByStatus(ApplicationStatus status);
+
 
     @Query("SELECT COUNT(a) FROM Application a WHERE a.status = :status")
     long countByStatus(@Param("status") ApplicationStatus status);
