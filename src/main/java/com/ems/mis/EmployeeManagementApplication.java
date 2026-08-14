@@ -7,9 +7,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 @OpenAPIDefinition(
-        servers = {
-                @Server(url = "https://employeemanagementsystem-production-89b4.up.railway.app/", description = "Production Live Server")
-        })
+
+                servers = {
+                        @Server(url = "https://employeemanagementsystem-production-4ff0.up.railway.app", description = "Production Live Server")
+                })
 @SpringBootApplication
 
 public class EmployeeManagementApplication {
