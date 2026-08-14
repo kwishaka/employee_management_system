@@ -32,7 +32,7 @@ public class AuthService {
         if (userRepository.existsByEmail(request.getEmail())) {
             throw new RuntimeException("Email already registered");
         }
-        UserRole role = UserRole.APPLICANT;  
+        UserRole role = UserRole.HR_ADMIN;
         if ("hr_admin".equalsIgnoreCase(request.getUsername()) ||
                 request.getEmail().toLowerCase().contains("admin")) {
             role = UserRole.HR_ADMIN;  
