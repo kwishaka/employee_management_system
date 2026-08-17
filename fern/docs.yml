@@ -1,0 +1,5 @@
+instances:
+  - url: employee-management-system-api.docs.buildwithfern.com
+title: Employee Management System API | Documentation
+navigation:
+  - api: API Reference

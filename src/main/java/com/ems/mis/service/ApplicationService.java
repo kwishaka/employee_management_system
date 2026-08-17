@@ -8,6 +8,7 @@ import com.ems.mis.entry.ApplicationStatus;
 import com.ems.mis.exception.ApplicationNotFoundException;
 import com.ems.mis.exception.InvalidStatusException;
 import com.ems.mis.repository.ApplicationRepository;
+import com.ems.mis.service.EmailService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -28,6 +29,7 @@ public class ApplicationService {
 
     private final ApplicationRepository applicationRepository;
     private final FileStorageService fileStorageService;
+    private final EmailService emailService;
 
     // ========================================
     // FEATURE 1: SUBMIT APPLICATION
@@ -79,11 +81,17 @@ public class ApplicationService {
         // Save to database
         Application saved = applicationRepository.save(application);
 
-        log.info(" Application submitted! Tracking ID: {}", trackingId);
+        log.info("Application submitted! Tracking ID: {}", trackingId);
 
-        // Build response
-        ApplicationResponseDTO response = mapToResponseDTO(saved);
-        response.setMessage("Application submitted successfully! Your Tracking ID is: " + trackingId);
+// Send confirmation email
+        emailService.sendApplicationConfirmation(
+                saved.getEmail(),
+                saved.getFullName(),
+                saved.getTrackingId()
+        );
+
+// Build response
+ApplicationResponseDTO response = mapToResponseDTO(saved);
         return response;
     }
 
@@ -248,7 +256,23 @@ public class ApplicationService {
         Application updated = applicationRepository.save(application);
         log.info(" Application {} reviewed - Decision: {}", application.getTrackingId(), newStatus);
 
+        log.info(
+                "Application {} reviewed - Decision: {}",
+                application.getTrackingId(),
+                newStatus
+        );
+
+// Notify applicant
+        emailService.sendApplicationStatusEmail(
+                updated.getEmail(),
+                updated.getFullName(),
+                updated.getTrackingId(),
+                updated.getStatus().name(),
+                updated.getHrNotes()
+        );
+
         return mapToAdminDTO(updated);
+
     }
 
     @Transactional
