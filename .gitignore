@@ -1,1 +1,6 @@
-target/
+﻿target/
+uploads/
+.idea/
+*.class
+.env
+data/

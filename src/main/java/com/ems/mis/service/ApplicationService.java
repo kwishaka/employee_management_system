@@ -8,12 +8,12 @@ import com.ems.mis.entry.ApplicationStatus;
 import com.ems.mis.exception.ApplicationNotFoundException;
 import com.ems.mis.exception.InvalidStatusException;
 import com.ems.mis.repository.ApplicationRepository;
+import com.ems.mis.service.EmailService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
-
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.HashMap;
@@ -29,6 +29,7 @@ public class ApplicationService {
 
     private final ApplicationRepository applicationRepository;
     private final FileStorageService fileStorageService;
+    private final EmailService emailService;
 
     // ========================================
     // FEATURE 1: SUBMIT APPLICATION
@@ -40,7 +41,7 @@ public class ApplicationService {
             MultipartFile resume,
             MultipartFile idDocument) throws IOException {
 
-        log.info("📝 Processing application submission for: {}", request.getEmail());
+        log.info(" Processing application submission for: {}", request.getEmail());
 
         if (applicationRepository.existsByEmail(request.getEmail())) {
             throw new RuntimeException("Email already registered. Please use a different email.");
@@ -51,12 +52,12 @@ public class ApplicationService {
 
         if (resume != null && !resume.isEmpty()) {
             resumeUrl = fileStorageService.storeFile(resume, "resume_" + request.getEmail());
-            log.info("✅ Resume stored: {}", resumeUrl);
+            log.info(" Resume stored: {}", resumeUrl);
         }
 
         if (idDocument != null && !idDocument.isEmpty()) {
             idDocumentUrl = fileStorageService.storeFile(idDocument, "id_" + request.getEmail());
-            log.info("✅ ID Document stored: {}", idDocumentUrl);
+            log.info(" ID Document stored: {}", idDocumentUrl);
         }
         String trackingId = generateTrackingId();
 
@@ -74,15 +75,29 @@ public class ApplicationService {
         application.setAppliedDate(LocalDateTime.now());
         Application saved = applicationRepository.save(application);
 
-        log.info("✅ Application submitted! Tracking ID: {}", trackingId);
+
+        log.info(" Application submitted! Tracking ID: {}", trackingId);
         ApplicationResponseDTO response = mapToResponseDTO(saved);
         response.setMessage("Application submitted successfully! Your Tracking ID is: " + trackingId);
+
+        log.info("Application submitted! Tracking ID: {}", trackingId);
+
+// Send confirmation email
+        emailService.sendApplicationConfirmation(
+                saved.getEmail(),
+                saved.getFullName(),
+                saved.getTrackingId()
+        );
+
+// Build response
+ApplicationResponseDTO response = mapToResponseDTO(saved);
+
         return response;
     }
 
     @Transactional
     public ApplicationResponseDTO createApplication(ApplicationRequestDTO request) {
-        log.info("📝 Creating new application for: {}", request.getFullName());
+        log.info(" Creating new application for: {}", request.getFullName());
 
         if (applicationRepository.existsByEmail(request.getEmail())) {
             throw new RuntimeException("Email already registered. Please use a different email.");
@@ -111,21 +126,21 @@ public class ApplicationService {
     // ========================================
 
     public ApplicationResponseDTO getApplication(Long id) {
-        log.info("🔍 Fetching application with id: {}", id);
+        log.info(" Fetching application with id: {}", id);
         Application application = applicationRepository.findById(id)
                 .orElseThrow(() -> new ApplicationNotFoundException("Application not found with id: " + id));
         return mapToResponseDTO(application);
     }
 
     public ApplicationResponseDTO getApplicationByTrackingId(String trackingId) {
-        log.info("🔍 Fetching application with tracking ID: {}", trackingId);
+        log.info(" Fetching application with tracking ID: {}", trackingId);
         Application application = applicationRepository.findByTrackingId(trackingId)
                 .orElseThrow(() -> new ApplicationNotFoundException("Application not found with tracking ID: " + trackingId));
         return mapToResponseDTO(application);
     }
 
     public StatusResponseDTO getApplicationStatus(String trackingId) {
-        log.info("🔍 Checking status for Tracking ID: {}", trackingId);
+        log.info(" Checking status for Tracking ID: {}", trackingId);
 
         Application application = applicationRepository.findByTrackingId(trackingId)
                 .orElseThrow(() -> new ApplicationNotFoundException("Application not found with tracking ID: " + trackingId));
@@ -144,7 +159,7 @@ public class ApplicationService {
     }
 
     public List<ApplicationResponseDTO> getAllApplications() {
-        log.info("📋 Fetching all applications");
+        log.info(" Fetching all applications");
         return applicationRepository.findAll().stream()
                 .map(this::mapToResponseDTO)
                 .collect(Collectors.toList());
@@ -154,16 +169,15 @@ public class ApplicationService {
     // FEATURE 3: HR ADMIN METHODS
     // ========================================
 
-
     public List<AdminApplicationResponseDTO> getAllApplicationsForAdmin() {
-        log.info("📋 Admin: Fetching all applications");
+        log.info(" Admin: Fetching all applications");
         return applicationRepository.findAll().stream()
                 .map(this::mapToAdminDTO)
                 .collect(Collectors.toList());
     }
 
     public List<AdminApplicationResponseDTO> getApplicationsByStatusForAdmin(String status) {
-        log.info("📋 Admin: Fetching applications with status: {}", status);
+        log.info(" Admin: Fetching applications with status: {}", status);
 
         ApplicationStatus applicationStatus;
         try {
@@ -179,7 +193,7 @@ public class ApplicationService {
 
 
     public AdminApplicationResponseDTO getApplicationByIdForAdmin(Long id) {
-        log.info("🔍 Admin: Fetching application with ID: {}", id);
+        log.info("Admin: Fetching application with ID: {}", id);
         Application application = applicationRepository.findById(id)
                 .orElseThrow(() -> new ApplicationNotFoundException("Application not found with ID: " + id));
         return mapToAdminDTO(application);
@@ -188,7 +202,7 @@ public class ApplicationService {
 
     @Transactional
     public AdminApplicationResponseDTO reviewApplication(Long id, String decision, String notes, String reviewer) {
-        log.info("📝 Reviewing application ID: {} by: {}", id, reviewer);
+        log.info(" Reviewing application ID: {} by: {}", id, reviewer);
 
         Application application = applicationRepository.findById(id)
                 .orElseThrow(() -> new ApplicationNotFoundException("Application not found with ID: " + id));
@@ -206,8 +220,9 @@ public class ApplicationService {
             throw new IllegalArgumentException("Invalid decision. Allowed: ADMITTED, REJECTED");
         }
 
-        if (!newStatus.isFinal()) {
-            throw new IllegalArgumentException("Decision must be ADMITTED or REJECTED");
+        if (newStatus != ApplicationStatus.REVIEWED && !newStatus.isFinal()) {
+            throw new IllegalArgumentException("Decision must be REVIEWED, ADMITTED, or REJECTED");
+
         }
 
         application.setStatus(newStatus);
@@ -216,21 +231,34 @@ public class ApplicationService {
         application.setReviewedBy(reviewer);
 
         Application updated = applicationRepository.save(application);
-        log.info("✅ Application {} reviewed - Decision: {}", application.getTrackingId(), newStatus);
+        log.info(" Application {} reviewed - Decision: {}", application.getTrackingId(), newStatus);
+
+        log.info(
+                "Application {} reviewed - Decision: {}",
+                application.getTrackingId(),
+                newStatus
+        );
+
+// Notify applicant
+        emailService.sendApplicationStatusEmail(
+                updated.getEmail(),
+                updated.getFullName(),
+                updated.getTrackingId(),
+                updated.getStatus().name(),
+                updated.getHrNotes()
+        );
 
         return mapToAdminDTO(updated);
+
     }
-
-
     @Transactional
     public void deleteApplication(Long id) {
-        log.info("🗑️ Deleting application with id: {}", id);
+        log.info("Deleting application with id: {}", id);
         Application application = applicationRepository.findById(id)
                 .orElseThrow(() -> new ApplicationNotFoundException("Application not found with id: " + id));
         applicationRepository.delete(application);
-        log.info("✅ Application deleted successfully!");
+        log.info(" Application deleted successfully!");
     }
-
 
     public Map<String, Object> getApplicationStats() {
         Map<String, Object> stats = new HashMap<>();
@@ -243,9 +271,6 @@ public class ApplicationService {
         return stats;
     }
 
-    // ========================================
-    // HELPER METHODS
-    // ========================================
 
     private AdminApplicationResponseDTO mapToAdminDTO(Application application) {
         return AdminApplicationResponseDTO.builder()

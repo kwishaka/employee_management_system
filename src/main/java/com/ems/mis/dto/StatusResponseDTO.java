@@ -1,12 +1,9 @@
 package com.ems.mis.dto;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 import java.time.LocalDateTime;
-
 @Data
 @Builder
 @NoArgsConstructor
@@ -14,7 +11,7 @@ import java.time.LocalDateTime;
 public class StatusResponseDTO {
     private String trackingId;
     private String fullName;
-    private String email;          // ✅ Add this field
+    private String email;
     private String status;
     private String statusDescription;
     private LocalDateTime appliedDate;

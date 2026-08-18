@@ -1,0 +1,20 @@
+{
+  "project": "employee-management-system",
+  "services": [
+    {
+      "name": "app",
+      "type": "container",
+      "port": 8080,
+      "docker": {
+        "dockerfilePath": "./Dockerfile",
+        "buildContext": "."
+      },
+      "env": {
+        "SPRING_DATASOURCE_URL": "",
+        "SPRING_DATASOURCE_USERNAME": "",
+        "SPRING_DATASOURCE_PASSWORD": "",
+        "SPRING_PROFILES_ACTIVE": "prod"
+      }
+    }
+  ]
+}
