@@ -1,3 +1,4 @@
+
 package com.ems.mis.dto;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -26,7 +27,14 @@ public class ApplicationRequestDTO {
     private String phone;
 
     @Size(max = 100, message = "Position must not exceed 100 characters")
+
+
     private String position;
+}
+
+                                                                                                                                                                                                                                                                        
+   
 
 }
                                                                                                                                                                                                                                                                         
+
