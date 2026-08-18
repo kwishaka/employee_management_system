@@ -25,6 +25,7 @@ public class EmailService {
 
         try {
             String trackingLink =
+
                     FRONTEND_URL + "/track/" + trackingId;
 
             MimeMessage message = mailSender.createMimeMessage();
