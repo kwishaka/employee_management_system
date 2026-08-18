@@ -1,5 +1,6 @@
 package com.ems.mis.repository;
 
+
 import com.ems.mis.entry.Application;
 import com.ems.mis.entry.ApplicationStatus;
 import org.springframework.data.jpa.repository.JpaRepository;

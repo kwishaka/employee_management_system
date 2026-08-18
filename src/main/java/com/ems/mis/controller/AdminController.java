@@ -9,7 +9,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 import java.util.Map;
 
@@ -24,21 +23,21 @@ public class AdminController {
 
     @GetMapping("/applications")
     public ResponseEntity<List<AdminApplicationResponseDTO>> getAllApplications() {
-        log.info("📋 Admin: Fetching all applications");
+       
         return ResponseEntity.ok(applicationService.getAllApplicationsForAdmin());
     }
 
     @GetMapping("/applications/status/{status}")
     public ResponseEntity<List<AdminApplicationResponseDTO>> getApplicationsByStatus(
             @PathVariable String status) {
-        log.info("📋 Admin: Fetching applications with status: {}", status);
+        
         return ResponseEntity.ok(applicationService.getApplicationsByStatusForAdmin(status));
     }
 
     @GetMapping("/applications/{id}")
     public ResponseEntity<AdminApplicationResponseDTO> getApplicationById(
             @PathVariable Long id) {
-        log.info("🔍 Admin: Fetching application ID: {}", id);
+        
         return ResponseEntity.ok(applicationService.getApplicationByIdForAdmin(id));
     }
 
@@ -57,7 +56,7 @@ public class AdminController {
 
     @DeleteMapping("/applications/{id}")
     public ResponseEntity<Void> deleteApplication(@PathVariable Long id) {
-        log.info("🗑 Admin: Deleting application ID: {}", id);
+        
         applicationService.deleteApplication(id);
         return ResponseEntity.noContent().build();
     }
