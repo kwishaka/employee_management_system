@@ -16,11 +16,8 @@ public class PositionController {
 
     private final PositionService positionService;
 
-    // =========================================================
     // PUBLIC ENDPOINTS - Applicants
-    // =========================================================
 
-    // Get positions that are currently available
     @GetMapping
     public ResponseEntity<List<Position>> getAvailablePositions() {
 
@@ -46,15 +43,12 @@ public class PositionController {
     // =========================================================
     // HR ADMIN ENDPOINTS
     // =========================================================
-
     // HR creates a new position
     @PostMapping("/admin")
     @PreAuthorize("hasRole('HR_ADMIN')")
     public ResponseEntity<Position> createPosition(
             @RequestBody Position position) {
-
         Position created = positionService.createPosition(position);
-
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(created);
@@ -82,7 +76,6 @@ public class PositionController {
 
         return ResponseEntity.ok(updated);
     }
-
     // HR deletes a position
     @DeleteMapping("/admin/{id}")
     @PreAuthorize("hasRole('HR_ADMIN')")

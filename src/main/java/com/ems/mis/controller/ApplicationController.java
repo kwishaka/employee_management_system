@@ -11,24 +11,19 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
 import java.io.IOException;
 import java.util.List;
-
 @Slf4j
 @RestController
 @RequestMapping("/api/applications")
 @RequiredArgsConstructor
 public class ApplicationController {
-
     private final ApplicationService applicationService;
-
-
     @PostMapping(value = "/submit", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<ApplicationResponseDTO> submitApplication(
             @Valid @RequestPart("application") ApplicationRequestDTO request,
-            @RequestPart(value = "resume", required = false) MultipartFile resume,
-            @RequestPart(value = "idDocument", required = false) MultipartFile idDocument) throws IOException {
+            @RequestPart(value = "resume" ,required = true) MultipartFile resume,
+            @RequestPart(value = "idDocument",required = true) MultipartFile idDocument) throws IOException {
 
         log.info("Received application submission from: {}", request.getEmail());
         ApplicationResponseDTO response = applicationService.submitApplication(request, resume, idDocument);
@@ -69,3 +64,5 @@ public class ApplicationController {
         return ResponseEntity.ok(responses);
     }
 }
+
+

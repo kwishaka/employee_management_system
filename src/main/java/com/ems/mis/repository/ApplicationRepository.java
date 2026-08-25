@@ -8,18 +8,12 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
-
 @Repository
 public interface ApplicationRepository extends JpaRepository<Application, Long> {
-
     Optional<Application> findByTrackingId(String trackingId);
     Optional<Application> findByEmail(String email);
-
     boolean existsByEmail(String email);
-
     List<Application> findByStatus(ApplicationStatus status);
-
-
     @Query("SELECT COUNT(a) FROM Application a WHERE a.status = :status")
     long countByStatus(@Param("status") ApplicationStatus status);
 }

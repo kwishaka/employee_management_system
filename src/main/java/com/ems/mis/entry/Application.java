@@ -1,9 +1,7 @@
 package com.ems.mis.entry;
-
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 import java.time.LocalDateTime;
-
 @Entity
 @Table(name = "applications")
 public class Application {
@@ -23,6 +21,10 @@ public class Application {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private ApplicationStatus status = ApplicationStatus.PENDING;
+    @Column(name = "resume_url")
+    private String resumeUrl;
+    @Column(name = "id_document_url")
+    private String idDocumentUrl;
     @CreationTimestamp
     @Column(name = "applied_date", updatable = false)
     private LocalDateTime appliedDate;
@@ -32,7 +34,6 @@ public class Application {
     private LocalDateTime reviewedAt;
     @Column(name = "reviewed_by", length = 100)
     private String reviewedBy;
-
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
     public String getTrackingId() { return trackingId; }
@@ -55,4 +56,8 @@ public class Application {
     public void setReviewedAt(LocalDateTime reviewedAt) { this.reviewedAt = reviewedAt; }
     public String getReviewedBy() { return reviewedBy; }
     public void setReviewedBy(String reviewedBy) { this.reviewedBy = reviewedBy; }
+    public String getResumeUrl() { return resumeUrl; }
+    public void setResumeUrl(String resumeUrl) { this.resumeUrl = resumeUrl; }
+    public String getIdDocumentUrl() { return idDocumentUrl; }
+    public void setIdDocumentUrl(String idDocumentUrl) { this.idDocumentUrl = idDocumentUrl; }
 }

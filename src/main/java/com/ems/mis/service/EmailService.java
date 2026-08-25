@@ -6,25 +6,19 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
-
 @Slf4j
 @Service
 @RequiredArgsConstructor
 public class EmailService {
-
     private final JavaMailSender mailSender;
-
     // Change this later when the frontend is deployed
     private static final String FRONTEND_URL = "http://localhost:5173";
-
     public void sendApplicationConfirmation(
             String applicantEmail,
             String fullName,
             String trackingId) {
-
         try {
             String trackingLink =
-
                     FRONTEND_URL + "/track/" + trackingId;
 
             MimeMessage message = mailSender.createMimeMessage();
@@ -35,7 +29,6 @@ public class EmailService {
             helper.setSubject(
                     "Employee Management System - Application Received"
             );
-
             String html = """
                     <html>
                     <body style="font-family: Arial, sans-serif; line-height: 1.6;">
