@@ -195,7 +195,10 @@ ApplicationResponseDTO response = mapToResponseDTO(saved);
                 .map(this::mapToAdminDTO)
                 .collect(Collectors.toList());
     }
-
+    public Application getApplicationEntityById(Long id) {
+        return applicationRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Application not found with ID: " + id));
+    }
 
     public List<AdminApplicationResponseDTO> getApplicationsByStatusForAdmin(String status) {
         log.info(" Admin: Fetching applications with status: {}", status);
