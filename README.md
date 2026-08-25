@@ -62,7 +62,7 @@ This project aims to demonstrate the following concepts:
 - Delete application records.
 - Manage employee records.
 
-### 🗄 Database Features
+###  Database Features
 
 - Store applicant information.
 - Store employee information.
@@ -71,7 +71,7 @@ This project aims to demonstrate the following concepts:
 
 ---
 
-## 🛠 Technologies Used
+## Technologies Used
 
 ### Programming Language
 
@@ -83,16 +83,16 @@ This project aims to demonstrate the following concepts:
 
 ### Database
 
-- MySQL Server 8.0
+PostgreSQL
 
 ### Database Connectivity
 
-- JDBC (Java Database Connectivity)
+jdbc:postgresql://localhost:808/employee_managment_system
 
 ### Development Tools
 
-- NetBeans IDE
-- MySQL Workbench
+- Java-21
+- PostgreSQL
 - Git
 - GitHub
 
@@ -101,16 +101,24 @@ This project aims to demonstrate the following concepts:
 ##  Project Structure
 
 ```
-EmployeeManagementSystem
-│
-├── src
-│   ├── com.ems.database
-│   ├── com.ems.dao
-│   ├── com.ems.model
-│   ├── com.ems.view
-│   ├── com.ems.controller
-│   └── com.ems.util
-│
+employee-management-system/
+├── src/
+│   └── main/
+│       ├── java/
+│       │   └── com/
+│       │       └── ems/
+│       │           └── mis/
+│       │               ├── controller/
+│       │               ├── service/
+│       │               ├── repository/
+│       │               ├── entry/
+│       │               ├── dto/
+│       │               ├── exception/
+│       │               └── security/
+│       └── resources/
+│           ├── application.properties
+│           └── static/
+├── pom.xml
 └── README.md
 ```
 
@@ -121,12 +129,11 @@ EmployeeManagementSystem
 The system consists of the following database tables:
 
 - users
-- applicants
-- employees
-- departments
+- applications
+- position
 ## Database
 
-The application uses MySQL as its relational database management system.
+The application uses postgresql as its relational database management system.
 
 ### Database Concepts Demonstrated
 
