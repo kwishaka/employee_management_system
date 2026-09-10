@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 @Slf4j
 @RestController
 @RequestMapping("/api/applications")
@@ -49,7 +50,7 @@ public class ApplicationController {
     }
 
 
-    @GetMapping("/{id}")
+    @GetMapping("/{id:\\d+}")
     public ResponseEntity<ApplicationResponseDTO> getApplication(@PathVariable Long id) {
         log.info("Fetching application with ID: {}", id);
         ApplicationResponseDTO response = applicationService.getApplication(id);
@@ -63,6 +64,21 @@ public class ApplicationController {
         List<ApplicationResponseDTO> responses = applicationService.getAllApplications();
         return ResponseEntity.ok(responses);
     }
+    @GetMapping("/my-applications")
+    public ResponseEntity<?> getMyApplications(@RequestParam String email) {
+        List<ApplicationResponseDTO> applications =
+                applicationService.getApplicationsByEmail(email);
+        if (applications.isEmpty()) {
+            return ResponseEntity.ok(Map.of(
+                    "message", "No applications found for this email",
+                    "applications", List.of()
+            ));
+        }
+        return ResponseEntity.ok(applications);
+    }
 }
+
+
+
 
 

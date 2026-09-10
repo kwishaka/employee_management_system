@@ -1,30 +1,54 @@
+
 package com.ems.mis.entry;
 
 import jakarta.persistence.*;
-import lombok.*;
+        import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "positions")
-@Getter
-@Setter
+@Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 public class Position {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     private String title;
 
-    @Column(nullable = false)
-    private String department;
-
-    @Column(length = 1000)
+    @Column(columnDefinition = "TEXT")
     private String description;
 
-    @Column(nullable = false)
-    private boolean available = true;
+    private String department;
+
+    @Column(name = "deadline")
+    private LocalDate deadline;
+
+    @Column(name = "is_active")
+    private Boolean active = true;
+
+    @CreationTimestamp
+    @Column(name = "created_at", updatable = false)
+    private LocalDateTime createdAt;
+
+    @Transient
+    public boolean isOpenForApplications() {
+        return active && deadline != null && !LocalDate.now().isAfter(deadline);
+    }
+    @Transient
+    public boolean isAvailable() {
+        return active && deadline != null && !LocalDate.now().isAfter(deadline);
+    }
+
 }
+

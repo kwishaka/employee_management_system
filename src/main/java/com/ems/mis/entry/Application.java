@@ -1,39 +1,65 @@
 package com.ems.mis.entry;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import org.hibernate.annotations.CreationTimestamp;
 import java.time.LocalDateTime;
 @Entity
 @Table(name = "applications")
+
 public class Application {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name = "tracking_id", unique = true, length = 50)
+
+    @Column(name = "tracking_id", unique = true, nullable = false)
     private String trackingId;
-    @Column(name = "full_name", nullable = false, length = 100)
+
+    @Column(name = "full_name", nullable = false)
     private String fullName;
-    @Column(nullable = false, length = 100)
+
+    @Column(name = "email", nullable = false)   // ✅ NOT unique
     private String email;
-    @Column(length = 20)
+
+    @Column(name = "phone")
     private String phone;
-    @Column(length = 100)
+
+    @Column(name = "position", nullable = false)  // ✅ Plain String
     private String position;
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    private ApplicationStatus status = ApplicationStatus.PENDING;
+
+    @Column(name = "position_id")
+    private Long positionId;                      // ✅ Optional reference
+
+    @Column(name = "education", columnDefinition = "TEXT")
+    private String education;
+
+    @Column(name = "work_experience", columnDefinition = "TEXT")
+    private String workExperience;
+
     @Column(name = "resume_url")
     private String resumeUrl;
+
     @Column(name = "id_document_url")
     private String idDocumentUrl;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status")
+    private ApplicationStatus status;
+
+    @Column(name = "submitted_at")
     @CreationTimestamp
-    @Column(name = "applied_date", updatable = false)
     private LocalDateTime appliedDate;
-    @Column(name = "hr_notes", columnDefinition = "TEXT")
-    private String hrNotes;
+
     @Column(name = "reviewed_at")
     private LocalDateTime reviewedAt;
-    @Column(name = "reviewed_by", length = 100)
+
+    @Column(name = "reviewed_by")
     private String reviewedBy;
+
+    @Column(name = "hr_notes", columnDefinition = "TEXT")
+    private String hrNotes;
+
+
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
     public String getTrackingId() { return trackingId; }

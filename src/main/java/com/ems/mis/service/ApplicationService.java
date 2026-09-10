@@ -8,6 +8,10 @@ import com.ems.mis.entry.ApplicationStatus;
 import com.ems.mis.exception.ApplicationNotFoundException;
 import com.ems.mis.exception.InvalidStatusException;
 import com.ems.mis.repository.ApplicationRepository;
+import com.ems.mis.repository.PositionRepository;
+import com.ems.mis.entry.Position;
+import com.ems.mis.repository.PositionRepository;
+import com.ems.mis.controller.PositionController;
 import com.ems.mis.service.EmailService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -30,6 +34,9 @@ public class ApplicationService {
     private final ApplicationRepository applicationRepository;
     private final FileStorageService fileStorageService;
     private final EmailService emailService;
+    private final PositionRepository positionRepository;
+
+   
 
     // ========================================
     // FEATURE 1: SUBMIT APPLICATION
@@ -47,8 +54,10 @@ public class ApplicationService {
         log.info(" Processing application submission for: {}", request.getEmail());
 
         // Check if email already exists
-        if (applicationRepository.existsByEmail(request.getEmail())) {
-            throw new RuntimeException("Email already registered. Please use a different email.");
+        if (applicationRepository.existsByEmailAndPosition(
+                request.getEmail(), request.getPosition())) {
+            throw new RuntimeException(
+                    "You have already applied for this position.");
         }
 
         // Store files if provided
@@ -74,7 +83,9 @@ public class ApplicationService {
         application.setFullName(request.getFullName());
         application.setEmail(request.getEmail());
         application.setPhone(request.getPhone());
-        application.setPosition(request.getPosition());
+        Position positionEntity = positionRepository.findById(request.getPositionId())
+                .orElseThrow(() -> new RuntimeException("Position not found with ID: " + request.getPositionId()));
+        application.setPosition(positionEntity.getTitle());
         application.setStatus(ApplicationStatus.PENDING);
         application.setAppliedDate(LocalDateTime.now());
 
@@ -180,6 +191,13 @@ ApplicationResponseDTO response = mapToResponseDTO(saved);
                 .map(this::mapToResponseDTO)
                 .collect(Collectors.toList());
     }
+    public List<ApplicationResponseDTO> getApplicationsByEmail(String email) {
+        log.info("Fetching all applications for email: {}", email);
+        return applicationRepository.findByEmail(email).stream()
+                .map(this::mapToResponseDTO)
+                .collect(Collectors.toList());
+    }
+
 
     // ========================================
     // FEATURE 3: HR ADMIN METHODS
@@ -345,3 +363,10 @@ ApplicationResponseDTO response = mapToResponseDTO(saved);
         return "APP-" + UUID.randomUUID().toString().substring(0, 8).toUpperCase();
     }
 }
+
+
+
+
+
+
+

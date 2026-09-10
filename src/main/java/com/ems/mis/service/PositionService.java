@@ -9,7 +9,7 @@ import java.util.List;
 public class PositionService {
     private final PositionRepository positionRepository;
     public List<Position> getAvailablePositions() {
-        return positionRepository.findByAvailableTrue();
+        return positionRepository.findByActiveTrueAndDeadlineAfter(java.time.LocalDate.now());
     }
     public List<Position> getAllPositions() {
         return positionRepository.findAll();
@@ -18,20 +18,20 @@ public class PositionService {
         if (positionRepository.existsByTitle(position.getTitle())) {
             throw new RuntimeException("Position already exists");
         }
-        position.setAvailable(true);
+        position.setActive(true);
         return positionRepository.save(position);
     }
     public Position getPositionById(Long id) {
-        return positionRepository.findById(id)
-                .orElseThrow(() ->
-                        new RuntimeException("Position not found"));
+        return positionRepository.findById(id)  // 
+                .orElseThrow(() -> new RuntimeException("Position not found with ID: " + id));
     }
     public Position updatePosition(Long id, Position updatedPosition) {
         Position position = getPositionById(id);
         position.setTitle(updatedPosition.getTitle());
         position.setDepartment(updatedPosition.getDepartment());
         position.setDescription(updatedPosition.getDescription());
-        position.setAvailable(updatedPosition.isAvailable());
+        position.setActive(updatedPosition.getActive());
+        position.setDeadline(updatedPosition.getDeadline());
         return positionRepository.save(position);
     }
     public void deletePosition(Long id) {
@@ -39,3 +39,7 @@ public class PositionService {
         positionRepository.delete(position);
     }
 }
+
+
+
+

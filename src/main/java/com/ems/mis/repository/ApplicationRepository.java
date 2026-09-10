@@ -11,8 +11,9 @@ import java.util.Optional;
 @Repository
 public interface ApplicationRepository extends JpaRepository<Application, Long> {
     Optional<Application> findByTrackingId(String trackingId);
-    Optional<Application> findByEmail(String email);
+    List<Application> findByEmail(String email);
     boolean existsByEmail(String email);
+    boolean existsByEmailAndPosition(String email, String position);
     List<Application> findByStatus(ApplicationStatus status);
     @Query("SELECT COUNT(a) FROM Application a WHERE a.status = :status")
     long countByStatus(@Param("status") ApplicationStatus status);
