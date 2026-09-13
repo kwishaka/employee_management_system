@@ -60,7 +60,8 @@ public class SecurityConfig {
         configuration.setAllowedOrigins(List.of(
                 "http://localhost:5173",
                 "http://localhost:5174",
-                "https://employee-management-system-api.docs.buildwithfern.com"
+                "https://employee-management-system-api.docs.buildwithfern.com",
+                "employee-management-frontend-f3yvzmre8-kwishaka.vercel.app"
         ));
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(List.of("*"));
